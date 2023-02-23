@@ -26,5 +26,4 @@ public class Vehicle {
 
     @Column(name = "available")
     private boolean isVehicleAvailable;
-
 }
