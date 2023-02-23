@@ -1,9 +1,7 @@
 package com.example.grouptransportapi.bean;
-
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 @NoArgsConstructor
 @Data
 @Entity(name = "vehicles")
@@ -22,6 +20,9 @@ public class Vehicle {
 
     @Column(name = "weight")
     private int weight;
+
+    @Column(name = "group_id")
+    private Long groupId;
 
     @Column(name = "available")
     private boolean isVehicleAvailable;
