@@ -22,4 +22,7 @@ public class Person {
 
     @Column(name = "age", nullable = false)
     private int age;
+
+    @Column(name = "person_id", nullable = false)
+    private Long personId;
 }
