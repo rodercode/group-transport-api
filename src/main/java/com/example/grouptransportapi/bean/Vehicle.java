@@ -10,14 +10,19 @@ import lombok.NoArgsConstructor;
 public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(name = "id",nullable = false)
+
+    @Column(name = "id", nullable = false)
     private Long id;
-    @Column(name = "model",nullable = false)
+
+    @Column(name = "model", nullable = false)
     private String model;
-    @Column(name="color", nullable = false)
+
+    @Column(name = "color", nullable = false)
     private String color;
+
     @Column(name = "weight")
     private int weight;
+
     @Column(name = "available")
     private boolean isVehicleAvailable;
 
