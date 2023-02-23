@@ -1,5 +1,6 @@
 package com.example.grouptransportapi.service;
 
+import com.example.grouptransportapi.bean.Group;
 import com.example.grouptransportapi.dao.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,5 +12,8 @@ public class GroupService {
     @Autowired
     public GroupService(GroupRepository groupRepo) {
         this.groupRepo = groupRepo;
+    }
+    public void createGroup(Group group){
+        groupRepo.save(group);
     }
 }
