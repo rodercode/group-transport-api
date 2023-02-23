@@ -5,6 +5,8 @@ import com.example.grouptransportapi.dao.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class GroupService {
     private final GroupRepository groupRepo;
@@ -15,5 +17,11 @@ public class GroupService {
     }
     public void createGroup(Group group){
         groupRepo.save(group);
+    }
+
+    public void addMember(Long groupId){
+        Group group = groupRepo.findById(groupId).get();
+        int members = group.getMembers();
+        group.setMembers(members+1);
     }
 }
