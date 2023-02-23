@@ -16,7 +16,7 @@ public class Group {
 
     @Column(name = "name", nullable = false)
     private String name;
-   
+
     @Column(name = "memebers", nullable = false)
     private int members;
 }
