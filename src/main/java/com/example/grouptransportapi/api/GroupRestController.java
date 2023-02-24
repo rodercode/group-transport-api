@@ -23,20 +23,25 @@ public class GroupRestController {
     private ResponseEntity<List<Group>> showAllGroups() {
         return ResponseEntity.ok(groupService.showGroups());
     }
-
     @PostMapping("api/groups")
     private ResponseEntity<Group> createGroup(@RequestBody Group group) {
         groupService.createGroup(group);
         return new ResponseEntity<>(group, HttpStatus.CREATED);
     }
-    @PutMapping("api/groups/{groupId}")
+    @PutMapping("api/groups/{groupId}/members")
     private ResponseEntity<Group> addMember(@PathVariable Long groupId) {
             Group group = groupService.addMember(groupId);
             return ResponseEntity.ok(group);
     }
-    @DeleteMapping("api/groups/{groupId}")
+    @DeleteMapping("api/groups/{groupId}/members")
     private ResponseEntity<Group> removeMember(@PathVariable Long groupId){
         Group group = groupService.removeMember(groupId);
+        return ResponseEntity.ok(group);
+    }
+
+    @PutMapping("api/groups/{groupId}/vehicles")
+    private ResponseEntity<Group> addVehicle(@PathVariable Long groupId){
+        Group group = groupService.addVehicle(groupId);
         return ResponseEntity.ok(group);
     }
 }
