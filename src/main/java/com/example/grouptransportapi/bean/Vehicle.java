@@ -12,12 +12,15 @@ public class Vehicle {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "type")
+    private String type;
+
     @Column(name = "location",nullable = false)
     private String location;
 
-    @Column(name = "group_id")
-    private Long groupId;
-
     @Column(name = "available")
     private boolean isVehicleAvailable;
+
+    @Column(name = "group_id")
+    private Long groupId;
 }
