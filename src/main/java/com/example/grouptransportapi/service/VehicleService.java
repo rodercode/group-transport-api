@@ -21,4 +21,8 @@ public class VehicleService {
     public List<Vehicle> selectVehicles(){
         return vehicleRepo.findAll();
     }
+
+    public List<Vehicle> selectVehiclesByGroupId(Long groupId){
+        return vehicleRepo.findAllById(groupId);
+    }
 }
