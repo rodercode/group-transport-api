@@ -22,4 +22,7 @@ public class Group {
 
     @Column(name = "memebers", nullable = false)
     private int members;
+
+    @Column(name = "vehicles",nullable = false)
+    private int vehicle;
 }

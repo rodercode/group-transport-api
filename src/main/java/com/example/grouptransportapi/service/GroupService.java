@@ -1,5 +1,4 @@
 package com.example.grouptransportapi.service;
-
 import com.example.grouptransportapi.bean.Group;
 import com.example.grouptransportapi.dao.GroupRepository;
 import com.example.grouptransportapi.handler.ListEmptyException;
@@ -19,38 +18,70 @@ public class GroupService {
     public GroupService(GroupRepository groupRepo) {
         this.groupRepo = groupRepo;
     }
-
+    // Show All Groups
     public List<Group> showGroups() {
-        if (groupRepo.findAll().isEmpty()){
+        if (groupRepo.findAll().isEmpty()) {
             throw new ListEmptyException("Group list is empty");
-        }else {
+        } else {
             return groupRepo.findAll();
         }
     }
-
+// Show specific Group by id
     public Optional<Group> showGroupById(Long groupId) {
         return groupRepo.findById(groupId);
     }
-
-    public Group showGroupByName(String name) {
-        return groupRepo.findByName(name);
-    }
-
+    // Create New Group
     public void createGroup(Group group) {
-        if (groupRepo.findByName(group.getName()) != null){
+        if (groupRepo.findByName(group.getName()) != null) {
             throw new UniqueValidationException("There already exist a Group with this name");
-        }else {
+        } else {
             groupRepo.save(group);
         }
     }
-
+    // Add New Member To The Group
     public Group addMember(Long groupId) {
-        if (groupRepo.findById(groupId).isEmpty()){
+        if (groupRepo.findById(groupId).isEmpty()) {
             throw new ResourceNotFoundException("no group exist with this id");
-        }else {
+        } else {
             Group group = showGroupById(groupId).get();
             int members = group.getMembers();
             group.setMembers(members + 1);
+            groupRepo.save(group);
+            return group;
+        }
+    }
+    // Remove Member From The Group
+    public Group removeMember(Long groupId) {
+        if (groupRepo.findById(groupId).isEmpty()) {
+            throw new ResourceNotFoundException("no group exist with this id");
+        } else {
+            Group group = showGroupById(groupId).get();
+            int members = group.getMembers();
+            group.setMembers(members - 1 );
+            groupRepo.save(group);
+            return group;
+        }
+    }
+    // Add Vehicle To Group
+    public Group addVehicle(Long groupId){
+        if (groupRepo.findById(groupId).isEmpty()) {
+            throw new ResourceNotFoundException("no group exist with this id");
+        } else {
+            Group group = showGroupById(groupId).get();
+            int vehicle = group.getVehicle();
+            group.setVehicle(vehicle + 1);
+            groupRepo.save(group);
+            return group;
+        }
+    }
+    // Remove Vehicle From Group
+    public Group removeVehicle(Long groupId) {
+        if (groupRepo.findById(groupId).isEmpty()) {
+            throw new ResourceNotFoundException("no group exist with this id");
+        } else {
+            Group group = showGroupById(groupId).get();
+            int vehicles = group.getVehicle();
+            group.setVehicle(vehicles - 1 );
             groupRepo.save(group);
             return group;
         }
