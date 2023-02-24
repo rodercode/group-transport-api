@@ -1,7 +1,5 @@
 package com.example.grouptransportapi.service;
-
 import com.example.grouptransportapi.bean.Group;
-import com.example.grouptransportapi.bean.Vehicle;
 import com.example.grouptransportapi.dao.GroupRepository;
 import com.example.grouptransportapi.handler.ListEmptyException;
 import com.example.grouptransportapi.handler.ResourceNotFoundException;
@@ -88,8 +86,4 @@ public class GroupService {
             return group;
         }
     }
-
-
-
-
 }

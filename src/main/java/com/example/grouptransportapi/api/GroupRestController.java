@@ -44,4 +44,9 @@ public class GroupRestController {
         Group group = groupService.addVehicle(groupId);
         return ResponseEntity.ok(group);
     }
+    @DeleteMapping("api/groups/{groupId}/vehicles")
+    private ResponseEntity<Group> removeVehicle(@PathVariable Long groupId){
+        Group group = groupService.removeVehicle(groupId);
+        return ResponseEntity.ok(group);
+    }
 }
