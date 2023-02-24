@@ -20,7 +20,6 @@ public class VehicleRestController {
     public VehicleRestController(VehicleService vehicleService) {
         this.vehicleService = vehicleService;
     }
-
     @GetMapping("api/vehicles")
     private ResponseEntity<List<Vehicle>> selectAllVehicles(){
         return ResponseEntity.ok(vehicleService.selectVehicles());

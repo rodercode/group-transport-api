@@ -1,11 +1,10 @@
 package com.example.grouptransportapi.exception;
 
 
-import com.example.grouptransportapi.bean.GroupErrorResponse;
+import com.example.grouptransportapi.bean.CrewErrorResponse;
 import com.example.grouptransportapi.handler.ListEmptyException;
 import com.example.grouptransportapi.handler.ResourceNotFoundException;
 import com.example.grouptransportapi.handler.UniqueValidationException;
-import jakarta.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,10 +14,10 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 @ControllerAdvice
-public class GroupRestExceptionHandler {
+public class CrewRestExceptionHandler {
     @ExceptionHandler
-    public ResponseEntity<GroupErrorResponse> handleException(ListEmptyException e) {
-        GroupErrorResponse error = new GroupErrorResponse
+    public ResponseEntity<CrewErrorResponse> handleException(ListEmptyException e) {
+        CrewErrorResponse error = new CrewErrorResponse
                 (
                         HttpStatus.NO_CONTENT.value(),
                         e.getMessage(),
@@ -28,8 +27,8 @@ public class GroupRestExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<GroupErrorResponse> handleException(ResourceNotFoundException e) {
-        GroupErrorResponse error = new GroupErrorResponse
+    public ResponseEntity<CrewErrorResponse> handleException(ResourceNotFoundException e) {
+        CrewErrorResponse error = new CrewErrorResponse
                 (
                         HttpStatus.NOT_FOUND.value(),
                         e.getMessage(),
@@ -38,8 +37,8 @@ public class GroupRestExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler
-    public ResponseEntity<GroupErrorResponse> handleException(UniqueValidationException e){
-        GroupErrorResponse error = new GroupErrorResponse
+    public ResponseEntity<CrewErrorResponse> handleException(UniqueValidationException e){
+        CrewErrorResponse error = new CrewErrorResponse
                 (
                         HttpStatus.UNPROCESSABLE_ENTITY.value(),
                         e.getMessage(),

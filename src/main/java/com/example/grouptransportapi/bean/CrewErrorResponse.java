@@ -7,7 +7,7 @@ import java.time.ZonedDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GroupErrorResponse {
+public class CrewErrorResponse {
     private int status;
     private String message;
     private ZonedDateTime data;
