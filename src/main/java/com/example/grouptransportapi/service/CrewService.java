@@ -1,6 +1,6 @@
 package com.example.grouptransportapi.service;
-import com.example.grouptransportapi.bean.Group;
-import com.example.grouptransportapi.dao.GroupRepository;
+import com.example.grouptransportapi.bean.Crew;
+import com.example.grouptransportapi.dao.CrewRepository;
 import com.example.grouptransportapi.handler.ListEmptyException;
 import com.example.grouptransportapi.handler.ResourceNotFoundException;
 import com.example.grouptransportapi.handler.UniqueValidationException;
@@ -11,15 +11,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class GroupService {
-    private final GroupRepository groupRepo;
+public class CrewService {
+    private final CrewRepository groupRepo;
 
     @Autowired
-    public GroupService(GroupRepository groupRepo) {
+    public CrewService(CrewRepository groupRepo) {
         this.groupRepo = groupRepo;
     }
     // Show All Groups
-    public List<Group> showGroups() {
+    public List<Crew> showGroups() {
         if (groupRepo.findAll().isEmpty()) {
             throw new ListEmptyException("Group list is empty");
         } else {
@@ -27,11 +27,11 @@ public class GroupService {
         }
     }
 // Show specific Group by id
-    public Optional<Group> showGroupById(Long groupId) {
+    public Optional<Crew> showGroupById(Long groupId) {
         return groupRepo.findById(groupId);
     }
     // Create New Group
-    public void createGroup(Group group) {
+    public void createGroup(Crew group) {
         if (groupRepo.findByName(group.getName()) != null) {
             throw new UniqueValidationException("There already exist a Group with this name");
         } else {
@@ -39,11 +39,11 @@ public class GroupService {
         }
     }
     // Add New Member To The Group
-    public Group addMember(Long groupId) {
+    public Crew addMember(Long groupId) {
         if (groupRepo.findById(groupId).isEmpty()) {
             throw new ResourceNotFoundException("no group exist with this id");
         } else {
-            Group group = showGroupById(groupId).get();
+            Crew group = showGroupById(groupId).get();
             int members = group.getMembers();
             group.setMembers(members + 1);
             groupRepo.save(group);
@@ -51,11 +51,11 @@ public class GroupService {
         }
     }
     // Remove Member From The Group
-    public Group removeMember(Long groupId) {
+    public Crew removeMember(Long groupId) {
         if (groupRepo.findById(groupId).isEmpty()) {
             throw new ResourceNotFoundException("no group exist with this id");
         } else {
-            Group group = showGroupById(groupId).get();
+            Crew group = showGroupById(groupId).get();
             int members = group.getMembers();
             group.setMembers(members - 1 );
             groupRepo.save(group);
@@ -63,11 +63,11 @@ public class GroupService {
         }
     }
     // Add Vehicle To Group
-    public Group addVehicle(Long groupId){
+    public Crew addVehicle(Long groupId){
         if (groupRepo.findById(groupId).isEmpty()) {
             throw new ResourceNotFoundException("no group exist with this id");
         } else {
-            Group group = showGroupById(groupId).get();
+            Crew group = showGroupById(groupId).get();
             int vehicle = group.getVehicle();
             group.setVehicle(vehicle + 1);
             groupRepo.save(group);
@@ -75,11 +75,11 @@ public class GroupService {
         }
     }
     // Remove Vehicle From Group
-    public Group removeVehicle(Long groupId) {
+    public Crew removeVehicle(Long groupId) {
         if (groupRepo.findById(groupId).isEmpty()) {
             throw new ResourceNotFoundException("no group exist with this id");
         } else {
-            Group group = showGroupById(groupId).get();
+            Crew group = showGroupById(groupId).get();
             int vehicles = group.getVehicle();
             group.setVehicle(vehicles - 1 );
             groupRepo.save(group);
