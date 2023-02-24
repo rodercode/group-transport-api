@@ -52,6 +52,17 @@ public class GroupService {
             return group;
         }
     }
+    public Group removeMember(Long groupId) {
+        if (groupRepo.findById(groupId).isEmpty()) {
+            throw new ResourceNotFoundException("no group exist with this id");
+        } else {
+            Group group = showGroupById(groupId).get();
+            int members = group.getMembers();
+            group.setMembers(members - 1 );
+            groupRepo.save(group);
+            return group;
+        }
+    }
 
     public Group addVehicle(Long groupId){
         if (groupRepo.findById(groupId).isEmpty()) {
@@ -64,16 +75,20 @@ public class GroupService {
             return group;
         }
     }
-    // Remove Member to group
-    public Group removeMember(Long groupId) {
+    
+    public Group removeVehicle(Long groupId) {
         if (groupRepo.findById(groupId).isEmpty()) {
             throw new ResourceNotFoundException("no group exist with this id");
         } else {
             Group group = showGroupById(groupId).get();
-            int members = group.getMembers();
-            group.setMembers(members - 1 );
+            int vehicles = group.getVehicle();
+            group.setVehicle(vehicles - 1 );
             groupRepo.save(group);
             return group;
         }
     }
+
+
+
+
 }
