@@ -20,7 +20,7 @@ public class GroupService {
     public GroupService(GroupRepository groupRepo) {
         this.groupRepo = groupRepo;
     }
-    // show all Groups
+    // Show All Groups
     public List<Group> showGroups() {
         if (groupRepo.findAll().isEmpty()) {
             throw new ListEmptyException("Group list is empty");
@@ -32,7 +32,7 @@ public class GroupService {
     public Optional<Group> showGroupById(Long groupId) {
         return groupRepo.findById(groupId);
     }
-
+    // Create New Group
     public void createGroup(Group group) {
         if (groupRepo.findByName(group.getName()) != null) {
             throw new UniqueValidationException("There already exist a Group with this name");
@@ -40,7 +40,7 @@ public class GroupService {
             groupRepo.save(group);
         }
     }
-    // Add new Member to a Group
+    // Add New Member To The Group
     public Group addMember(Long groupId) {
         if (groupRepo.findById(groupId).isEmpty()) {
             throw new ResourceNotFoundException("no group exist with this id");
@@ -52,6 +52,7 @@ public class GroupService {
             return group;
         }
     }
+    // Remove Member From The Group
     public Group removeMember(Long groupId) {
         if (groupRepo.findById(groupId).isEmpty()) {
             throw new ResourceNotFoundException("no group exist with this id");
@@ -63,7 +64,7 @@ public class GroupService {
             return group;
         }
     }
-
+    // Add Vehicle To Group
     public Group addVehicle(Long groupId){
         if (groupRepo.findById(groupId).isEmpty()) {
             throw new ResourceNotFoundException("no group exist with this id");
@@ -75,7 +76,7 @@ public class GroupService {
             return group;
         }
     }
-    
+    // Remove Vehicle From Group
     public Group removeVehicle(Long groupId) {
         if (groupRepo.findById(groupId).isEmpty()) {
             throw new ResourceNotFoundException("no group exist with this id");
