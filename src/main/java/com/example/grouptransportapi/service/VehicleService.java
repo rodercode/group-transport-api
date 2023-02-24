@@ -23,6 +23,6 @@ public class VehicleService {
     }
 
     public List<Vehicle> selectVehiclesByGroupId(Long groupId){
-        return vehicleRepo.findAllById(groupId);
+        return vehicleRepo.findAllByGroupId(groupId);
     }
 }
