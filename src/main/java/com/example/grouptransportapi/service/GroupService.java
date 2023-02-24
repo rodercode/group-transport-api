@@ -59,7 +59,7 @@ public class GroupService {
         } else {
             Group group = showGroupById(groupId).get();
             int vehicle = group.getVehicle();
-            group.setMembers(vehicle + 1);
+            group.setVehicle(vehicle + 1);
             groupRepo.save(group);
             return group;
         }
