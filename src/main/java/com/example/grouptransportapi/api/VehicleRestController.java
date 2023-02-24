@@ -24,6 +24,11 @@ public class VehicleRestController {
     private ResponseEntity<List<Vehicle>> selectAllVehicles(){
         return ResponseEntity.ok(vehicleService.selectVehicles());
     }
+
+    @GetMapping("api/vehicles/groupId")
+    private ResponseEntity<List<Vehicle>> selectAllVehiclesByGroupId(){
+        return ResponseEntity.ok(vehicleService.selectVehiclesByGroupId());
+    }
     @PostMapping("api/vehicles")
     private ResponseEntity<Vehicle> createVehicle(@RequestBody Vehicle vehicle){
         vehicleService.createVehicle(vehicle);
