@@ -21,9 +21,9 @@ public class GroupService {
     }
 
     public List<Group> showGroups() {
-        if (groupRepo.findAll().isEmpty()){
+        if (groupRepo.findAll().isEmpty()) {
             throw new ListEmptyException("Group list is empty");
-        }else {
+        } else {
             return groupRepo.findAll();
         }
     }
@@ -32,25 +32,33 @@ public class GroupService {
         return groupRepo.findById(groupId);
     }
 
-    public Group showGroupByName(String name) {
-        return groupRepo.findByName(name);
-    }
-
     public void createGroup(Group group) {
-        if (groupRepo.findByName(group.getName()) != null){
+        if (groupRepo.findByName(group.getName()) != null) {
             throw new UniqueValidationException("There already exist a Group with this name");
-        }else {
+        } else {
             groupRepo.save(group);
         }
     }
 
     public Group addMember(Long groupId) {
-        if (groupRepo.findById(groupId).isEmpty()){
+        if (groupRepo.findById(groupId).isEmpty()) {
             throw new ResourceNotFoundException("no group exist with this id");
-        }else {
+        } else {
             Group group = showGroupById(groupId).get();
             int members = group.getMembers();
             group.setMembers(members + 1);
+            groupRepo.save(group);
+            return group;
+        }
+    }
+
+    public Group removeMember(Long groupId) {
+        if (groupRepo.findById(groupId).isEmpty()) {
+            throw new ResourceNotFoundException("no group exist with this id");
+        } else {
+            Group group = showGroupById(groupId).get();
+            int members = group.getMembers();
+            group.setMembers(members - 1 );
             groupRepo.save(group);
             return group;
         }
