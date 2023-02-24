@@ -39,7 +39,7 @@ public class GroupRestController {
     @PutMapping("api/groups/{groupId}")
     private ResponseEntity<Group> addMember(@PathVariable Long groupId) {
         if (groupService.showGroupById(groupId).isEmpty())
-            throw new ResourceNotFoundException("Could not find a group with this id because this group does not exist");
+            throw new ResourceNotFoundException("no group exist with this id");
         else {
             Group group = groupService.addMember(groupId);
             return ResponseEntity.ok(group);
