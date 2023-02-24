@@ -18,8 +18,14 @@ public class GroupRestController {
         this.groupService = groupService;
     }
     @GetMapping("api/groups")
-    private List<Group> showAllGroups(){
-       return groupService.showGroups();
+    private ResponseEntity<List<Group>> showAllGroups(){
+        if (groupService.showGroups().isEmpty()){
+            return ResponseEntity
+                    .status(204)
+                    .header("x-information", "The list was empty")
+                    .build();
+        }
+       return ResponseEntity.ok(groupService.showGroups());
     }
     @PostMapping("api/groups")
     private ResponseEntity<Group> createGroup(@RequestBody Group group){
