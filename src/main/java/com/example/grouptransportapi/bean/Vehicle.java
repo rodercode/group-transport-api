@@ -12,14 +12,8 @@ public class Vehicle {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "model", nullable = false)
-    private String model;
-
-    @Column(name = "color", nullable = false)
-    private String color;
-
-    @Column(name = "weight")
-    private int weight;
+    @Column(name = "location",nullable = false)
+    private String location;
 
     @Column(name = "group_id")
     private Long groupId;
