@@ -23,6 +23,10 @@ public class GroupService {
         return groupRepo.findById(groupId);
     }
 
+    public Group showGroupByName(String name){
+        return groupRepo.findByName(name);
+    }
+
     public void createGroup(Group group){
         groupRepo.save(group);
     }
@@ -34,4 +38,6 @@ public class GroupService {
         groupRepo.save(group);
         return group;
     }
+
+
 }
