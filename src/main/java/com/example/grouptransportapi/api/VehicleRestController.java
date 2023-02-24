@@ -26,7 +26,7 @@ public class VehicleRestController {
         vehicleService.createVehicle(vehicle);
         return new ResponseEntity<>(vehicle, HttpStatus.CREATED);
     }
-    @DeleteMapping("api/vehicle/{vehicleId}")
+    @DeleteMapping("api/vehicles/{vehicleId}")
     private ResponseEntity<String> removeVehicle(@PathVariable Long vehicleId){
         vehicleService.removeVehicle(vehicleId);
         return ResponseEntity.ok("Vehicle was deleted from the group");
