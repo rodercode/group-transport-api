@@ -2,6 +2,7 @@ package com.example.grouptransportapi.api;
 
 import com.example.grouptransportapi.bean.Group;
 import com.example.grouptransportapi.handler.ListEmptyException;
+import com.example.grouptransportapi.handler.ResourceNotFoundException;
 import com.example.grouptransportapi.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,11 @@ public class GroupRestController {
 
     @PutMapping("api/groups/{groupId}")
     private ResponseEntity<Group> addMember(@PathVariable Long groupId) {
-        Group group = groupService.addMember(groupId);
-        return ResponseEntity.ok(group);
+        if (groupService.showGroupById(groupId).isEmpty())
+            throw new ResourceNotFoundException("Could not find group cause it does not exist");
+        else {
+            Group group = groupService.addMember(groupId);
+            return ResponseEntity.ok(group);
+        }
     }
 }
