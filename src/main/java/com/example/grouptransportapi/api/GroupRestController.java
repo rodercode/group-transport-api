@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class GroupRestController {
-
     private final GroupService groupService;
 
     @Autowired
@@ -22,7 +21,6 @@ public class GroupRestController {
         groupService.createGroup(group);
         return group.getName()+ "was created";
     }
-
     @PutMapping("api/groups/{groupId}")
     private void addMember(@PathVariable Long groupId){
         groupService.addMember(groupId);
