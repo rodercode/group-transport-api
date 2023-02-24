@@ -19,6 +19,9 @@ public class GroupService {
     public List<Group> showGroups(){
         return groupRepo.findAll();
     }
+    public Optional<Group> showGroupById(Long groupId){
+        return groupRepo.findById(groupId);
+    }
 
     public void createGroup(Group group){
         groupRepo.save(group);

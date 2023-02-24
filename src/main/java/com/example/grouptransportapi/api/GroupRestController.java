@@ -33,7 +33,9 @@ public class GroupRestController {
         return new ResponseEntity<>(group, HttpStatus.CREATED);
     }
     @PutMapping("api/groups/{groupId}")
-    private void addMember(@PathVariable Long groupId){
+    private ResponseEntity<Group> addMember(@PathVariable Long groupId){
         groupService.addMember(groupId);
+        Group group = groupService.showGroupById(groupId).get();
+       return ResponseEntity.ok(group);
     }
 }
