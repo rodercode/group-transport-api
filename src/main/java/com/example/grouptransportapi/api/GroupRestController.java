@@ -3,6 +3,7 @@ package com.example.grouptransportapi.api;
 import com.example.grouptransportapi.bean.Group;
 import com.example.grouptransportapi.handler.ListEmptyException;
 import com.example.grouptransportapi.handler.ResourceNotFoundException;
+import com.example.grouptransportapi.handler.UniqueValidationException;
 import com.example.grouptransportapi.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,8 @@ public class GroupRestController {
 
     @PostMapping("api/groups")
     private ResponseEntity<Group> createGroup(@RequestBody Group group) {
-
+        if (groupService.showGroupByName(group.getName()) != null)
+            throw new UniqueValidationException("There already exist a Group with this name");
         groupService.createGroup(group);
         return new ResponseEntity<>(group, HttpStatus.CREATED);
     }
