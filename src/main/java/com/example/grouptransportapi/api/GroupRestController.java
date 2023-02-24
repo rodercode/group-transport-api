@@ -1,6 +1,7 @@
 package com.example.grouptransportapi.api;
 
 import com.example.grouptransportapi.bean.Group;
+import com.example.grouptransportapi.handler.ListEmptyException;
 import com.example.grouptransportapi.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,10 +21,7 @@ public class GroupRestController {
     @GetMapping("api/groups")
     private ResponseEntity<List<Group>> showAllGroups(){
         if (groupService.showGroups().isEmpty()){
-            return ResponseEntity
-                    .status(204)
-                    .header("x-information", "The list was empty")
-                    .build();
+           throw new ListEmptyException("Group list is empty");
         }
        return ResponseEntity.ok(groupService.showGroups());
     }
@@ -34,8 +32,7 @@ public class GroupRestController {
     }
     @PutMapping("api/groups/{groupId}")
     private ResponseEntity<Group> addMember(@PathVariable Long groupId){
-        groupService.addMember(groupId);
-        Group group = groupService.showGroupById(groupId).get();
+        Group group = groupService.addMember(groupId);
        return ResponseEntity.ok(group);
     }
 }

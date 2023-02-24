@@ -27,9 +27,11 @@ public class GroupService {
         groupRepo.save(group);
     }
 
-    public void addMember(Long groupId){
-        Group group = groupRepo.findById(groupId).get();
+    public Group addMember(Long groupId){
+        Group group = showGroupById(groupId).get();
         int members = group.getMembers();
-        group.setMembers(members+1);
+        group.setMembers(members + 1);
+        groupRepo.save(group);
+        return group;
     }
 }
