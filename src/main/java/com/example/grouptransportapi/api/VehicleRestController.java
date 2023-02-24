@@ -1,15 +1,11 @@
 package com.example.grouptransportapi.api;
-
 import com.example.grouptransportapi.bean.Vehicle;
-import com.example.grouptransportapi.dao.VehicleRepository;
 import com.example.grouptransportapi.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
 @RestController
 public class VehicleRestController {
     private final VehicleService vehicleService;
@@ -29,5 +25,10 @@ public class VehicleRestController {
     private ResponseEntity<Vehicle> createVehicle(@RequestBody Vehicle vehicle){
         vehicleService.createVehicle(vehicle);
         return new ResponseEntity<>(vehicle, HttpStatus.CREATED);
+    }
+    @DeleteMapping("api/vehicles/{vehicleId}")
+    private ResponseEntity<String> removeVehicle(@PathVariable Long vehicleId){
+        vehicleService.removeVehicle(vehicleId);
+        return ResponseEntity.ok("Vehicle was deleted from the group");
     }
 }
