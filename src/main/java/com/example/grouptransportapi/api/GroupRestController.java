@@ -29,6 +29,7 @@ public class GroupRestController {
 
     @PostMapping("api/groups")
     private ResponseEntity<Group> createGroup(@RequestBody Group group) {
+
         groupService.createGroup(group);
         return new ResponseEntity<>(group, HttpStatus.CREATED);
     }
