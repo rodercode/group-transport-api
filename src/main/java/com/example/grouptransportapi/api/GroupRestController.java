@@ -18,21 +18,23 @@ public class GroupRestController {
     public GroupRestController(GroupService groupService) {
         this.groupService = groupService;
     }
+
     @GetMapping("api/groups")
-    private ResponseEntity<List<Group>> showAllGroups(){
-        if (groupService.showGroups().isEmpty()){
-           throw new ListEmptyException("Group list is empty");
-        }
-       return ResponseEntity.ok(groupService.showGroups());
+    private ResponseEntity<List<Group>> showAllGroups() {
+        if (groupService.showGroups().isEmpty())
+            throw new ListEmptyException("Group list is empty");
+        return ResponseEntity.ok(groupService.showGroups());
     }
+
     @PostMapping("api/groups")
-    private ResponseEntity<Group> createGroup(@RequestBody Group group){
+    private ResponseEntity<Group> createGroup(@RequestBody Group group) {
         groupService.createGroup(group);
         return new ResponseEntity<>(group, HttpStatus.CREATED);
     }
+
     @PutMapping("api/groups/{groupId}")
-    private ResponseEntity<Group> addMember(@PathVariable Long groupId){
+    private ResponseEntity<Group> addMember(@PathVariable Long groupId) {
         Group group = groupService.addMember(groupId);
-       return ResponseEntity.ok(group);
+        return ResponseEntity.ok(group);
     }
 }
