@@ -1,6 +1,7 @@
 package com.example.grouptransportapi.service;
 
 import com.example.grouptransportapi.bean.Group;
+import com.example.grouptransportapi.bean.Vehicle;
 import com.example.grouptransportapi.dao.GroupRepository;
 import com.example.grouptransportapi.handler.ListEmptyException;
 import com.example.grouptransportapi.handler.ResourceNotFoundException;
@@ -19,7 +20,7 @@ public class GroupService {
     public GroupService(GroupRepository groupRepo) {
         this.groupRepo = groupRepo;
     }
-
+    // show all Groups
     public List<Group> showGroups() {
         if (groupRepo.findAll().isEmpty()) {
             throw new ListEmptyException("Group list is empty");
@@ -27,7 +28,7 @@ public class GroupService {
             return groupRepo.findAll();
         }
     }
-
+// Show specific Group by id
     public Optional<Group> showGroupById(Long groupId) {
         return groupRepo.findById(groupId);
     }
@@ -39,7 +40,7 @@ public class GroupService {
             groupRepo.save(group);
         }
     }
-
+    // Add new Member to a Group
     public Group addMember(Long groupId) {
         if (groupRepo.findById(groupId).isEmpty()) {
             throw new ResourceNotFoundException("no group exist with this id");
@@ -52,6 +53,18 @@ public class GroupService {
         }
     }
 
+    public Group addVehicle(Long groupId){
+        if (groupRepo.findById(groupId).isEmpty()) {
+            throw new ResourceNotFoundException("no group exist with this id");
+        } else {
+            Group group = showGroupById(groupId).get();
+            int vehicle = group.getVehicle();
+            group.setMembers(vehicle + 1);
+            groupRepo.save(group);
+            return group;
+        }
+    }
+    // Remove Member to group
     public Group removeMember(Long groupId) {
         if (groupRepo.findById(groupId).isEmpty()) {
             throw new ResourceNotFoundException("no group exist with this id");

@@ -15,12 +15,10 @@ import java.util.List;
 @RestController
 public class GroupRestController {
     private final GroupService groupService;
-
     @Autowired
     public GroupRestController(GroupService groupService) {
         this.groupService = groupService;
     }
-
     @GetMapping("api/groups")
     private ResponseEntity<List<Group>> showAllGroups() {
         return ResponseEntity.ok(groupService.showGroups());
