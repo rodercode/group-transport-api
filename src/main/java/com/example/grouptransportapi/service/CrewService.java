@@ -31,14 +31,12 @@ public class CrewService {
         return groupRepo.findById(groupId);
     }
     // Create New Group
-    public String createGroup(Crew crew) {
+    public void createGroup(Crew crew) {
         if (groupRepo.findByName(crew.getName()) != null)
             throw new UniqueValidationException("There already exist a Group with this name");
          else {
             groupRepo.save(crew);
-            return crew.getName() + " was created";
         }
-
     }
 
     public Crew removeGroup(Crew crew){

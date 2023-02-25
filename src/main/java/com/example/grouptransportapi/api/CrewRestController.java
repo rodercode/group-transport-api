@@ -23,8 +23,9 @@ public class CrewRestController {
         return ResponseEntity.ok(crewService.showGroups());
     }
     @PostMapping
-    private ResponseEntity<String> createGroup(@RequestBody Crew crew) {
-        return new ResponseEntity<>(crewService.createGroup(crew), HttpStatus.CREATED);
+    private ResponseEntity<Crew> createGroup(@RequestBody Crew crew) {
+        crewService.createGroup(crew);
+        return new ResponseEntity<>(crew, HttpStatus.CREATED);
     }
     @DeleteMapping("{groupId}")
     private ResponseEntity<String> deleteGroup(@PathVariable Long groupId) {
