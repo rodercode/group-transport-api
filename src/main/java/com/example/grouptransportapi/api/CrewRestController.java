@@ -23,13 +23,11 @@ public class CrewRestController {
         return ResponseEntity.ok(crewService.showGroups());
     }
     @PostMapping
-    private ResponseEntity<Crew> createGroup(@RequestBody Crew group) {
-        crewService.createGroup(group);
-        return new ResponseEntity<>(group, HttpStatus.CREATED);
+    private ResponseEntity<String> createGroup(@RequestBody Crew crew) {
+        return new ResponseEntity<>(crewService.createGroup(crew), HttpStatus.CREATED);
     }
-
     @DeleteMapping("{groupId}")
-    private ResponseEntity<Crew> deleteGroup(@PathVariable Long groupId) {
+    private ResponseEntity<String> deleteGroup(@PathVariable Long groupId) {
         Crew crew = crewService.showGroupById(groupId).get();
         crewService.removeGroup(crew);
         return ResponseEntity.ok(crew);
@@ -44,9 +42,8 @@ public class CrewRestController {
     @DeleteMapping("{groupId}/members")
     private ResponseEntity<Crew> removeMember(@PathVariable Long groupId) {
         Crew group = crewService.removeMember(groupId);
-        return ResponseEntity.ok(group);
+        return ResponseEntity.ok(crewService.removeMember(groupId));
     }
-
     @GetMapping("{groupId}/vehicles")
     private ResponseEntity<List<Vehicle>> selectAllVehiclesByGroupId(@PathVariable Long groupId) {
         return ResponseEntity.ok(vehicleService.selectVehiclesByGroupId(groupId));
