@@ -37,18 +37,17 @@ public class CrewRestController {
         Crew group = groupService.removeMember(groupId);
         return ResponseEntity.ok(group);
     }
-    @GetMapping("vehicles/{groupId}")
+    @GetMapping("{groupId}/vehicles")
     private ResponseEntity<List<Vehicle>> selectAllVehiclesByGroupId(@PathVariable Long groupId){
         return ResponseEntity.ok(vehicleService.selectVehiclesByGroupId(groupId));
     }
     @PostMapping("{groupId}/vehicles")
     private ResponseEntity<Vehicle> addVehicle(@PathVariable Long groupId,@RequestBody Vehicle vehicle){
-        System.out.println(vehicle);
         vehicle.setGroupId(groupId);
         vehicleService.createVehicle(vehicle);
         return new ResponseEntity<>(vehicle, HttpStatus.CREATED);
     }
-    @DeleteMapping("api/vehicles/{vehicleId}")
+    @DeleteMapping("{groupId}/vehicles/{vehicleId}")
     private ResponseEntity<Vehicle> removeVehicle(@PathVariable Long vehicleId){
         Vehicle vehicle = vehicleService.selectVehicle(vehicleId).get();
         vehicleService.removeVehicle(vehicleId);
