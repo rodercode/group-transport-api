@@ -38,10 +38,8 @@ public class CrewService {
             groupRepo.save(crew);
         }
     }
-
-    public Crew removeGroup(Crew crew){
-        groupRepo.delete(crew);
-        return crew;
+    public void removeGroup(Long groupId){
+        groupRepo.deleteById(groupId);
     }
     // Add New Member To The Group
     public Crew addMember(Long groupId) {

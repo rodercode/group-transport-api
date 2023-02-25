@@ -19,18 +19,15 @@ public class VehicleService {
         this.vehicleRepo = vehicleRepo;
         this.crewRepository = crewRepository;
     }
-
     public Optional<Vehicle> selectVehicle(Long vehicleId){
         return vehicleRepo.findById(vehicleId);
     }
-
     public List<Vehicle> selectVehicles(){
         return vehicleRepo.findAll();
     }
     public List<Vehicle> selectVehiclesByGroupId(Long groupId){
         return vehicleRepo.findAllByGroupId(groupId);
     }
-
     public void createVehicle(Vehicle vehicle){
         Crew crew = crewRepository.findById(vehicle.getGroupId()).get();
         int vehicles = crew.getVehicle();
@@ -38,15 +35,16 @@ public class VehicleService {
         crewRepository.save(crew);
         vehicleRepo.save(vehicle);
     }
-
-    public void changeVehicleStatus(Vehicle vehicle,boolean status){
+    public void changeVehicleStatus(Long vehicleId,boolean status){
+        Vehicle vehicle = vehicleRepo.findById(vehicleId).get();
         vehicle.setVehicleAvailable(status);
         vehicleRepo.save(vehicle);
     }
-
-
     public void removeVehicle(Long groupId){
        Vehicle vehicle = vehicleRepo.findById(groupId).get();
+       Crew crew = crewRepository.findById(vehicle.getGroupId()).get();
+       crew.setVehicle(crew.getVehicle()-1);
+       crewRepository.save(crew);
        vehicleRepo.delete(vehicle);
     }
 }

@@ -13,6 +13,7 @@ import java.util.List;
 public class CrewRestController {
     private final CrewService crewService;
     private final VehicleService vehicleService;
+
     @Autowired
     public CrewRestController(CrewService crewService, VehicleService vehicleService) {
         this.crewService = crewService;
@@ -29,45 +30,41 @@ public class CrewRestController {
     }
     @DeleteMapping("{groupId}")
     private ResponseEntity<String> deleteGroup(@PathVariable Long groupId) {
-        Crew crew = crewService.showGroupById(groupId).get();
-        crewService.removeGroup(crew);
-        return ResponseEntity.ok(crew);
+        crewService.removeGroup(groupId);
+        return ResponseEntity.ok("Group delete successfully");
     }
-
     @PostMapping("{groupId}/members")
     private ResponseEntity<Crew> addMember(@PathVariable Long groupId) {
         Crew group = crewService.addMember(groupId);
         return ResponseEntity.ok(group);
     }
-
     @DeleteMapping("{groupId}/members")
-    private ResponseEntity<Crew> removeMember(@PathVariable Long groupId) {
-        Crew group = crewService.removeMember(groupId);
-        return ResponseEntity.ok(crewService.removeMember(groupId));
+    private ResponseEntity<String> removeMember(@PathVariable Long groupId) {
+        crewService.removeMember(groupId);
+        return ResponseEntity.ok(" Member deleted successfully");
     }
     @GetMapping("{groupId}/vehicles")
     private ResponseEntity<List<Vehicle>> selectAllVehiclesByGroupId(@PathVariable Long groupId) {
         return ResponseEntity.ok(vehicleService.selectVehiclesByGroupId(groupId));
     }
-
     @PutMapping("{groupId}/vehicles/{vehicleId}/{status}")
-    private ResponseEntity<Vehicle> changeVehicleStatus(@PathVariable Long groupId, @PathVariable Long vehicleId, @PathVariable boolean status) {
+    private ResponseEntity<Vehicle> changeVehicleStatus(@PathVariable Long groupId,
+                                                        @PathVariable Long vehicleId,
+                                                        @PathVariable boolean status) {
         Vehicle vehicle = vehicleService.selectVehicle(vehicleId).get();
-        vehicleService.changeVehicleStatus(vehicle, status);
+        vehicleService.changeVehicleStatus(vehicleId, status);
         return ResponseEntity.ok(vehicle);
     }
-
     @PostMapping("{groupId}/vehicles")
-    private ResponseEntity<Vehicle> addVehicle(@PathVariable Long groupId, @RequestBody Vehicle vehicle) {
+    private ResponseEntity<Vehicle> addVehicle(@PathVariable Long groupId,
+                                               @RequestBody Vehicle vehicle) {
         vehicle.setGroupId(groupId);
         vehicleService.createVehicle(vehicle);
         return new ResponseEntity<>(vehicle, HttpStatus.CREATED);
     }
-
     @DeleteMapping("{groupId}/vehicles/{vehicleId}")
-    private ResponseEntity<Vehicle> removeVehicle(@PathVariable Long vehicleId) {
-        Vehicle vehicle = vehicleService.selectVehicle(vehicleId).get();
+    private ResponseEntity<String> removeVehicle(@PathVariable Long groupId,@PathVariable Long vehicleId) {
         vehicleService.removeVehicle(vehicleId);
-        return ResponseEntity.ok(vehicle);
+        return ResponseEntity.ok("Vehicle deleted successfully");
     }
 }

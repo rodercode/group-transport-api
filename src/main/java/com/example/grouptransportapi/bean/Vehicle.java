@@ -1,17 +1,14 @@
 package com.example.grouptransportapi.bean;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @NoArgsConstructor
-@Data
+@Setter @Getter
 @Entity(name = "vehicles")
 public class Vehicle {
-
-    public Vehicle(String type, String location, boolean isVehicleAvailable) {
-        this.type = type;
-        this.location = location;
-        this.isVehicleAvailable = isVehicleAvailable;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
