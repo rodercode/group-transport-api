@@ -41,6 +41,10 @@ public class CrewRestController {
     private ResponseEntity<List<Vehicle>> selectAllVehiclesByGroupId(@PathVariable Long groupId){
         return ResponseEntity.ok(vehicleService.selectVehiclesByGroupId(groupId));
     }
+    @PutMapping("{groupId}/vehicles/{vehicleId}/status")
+    private ResponseEntity<Vehicle> changeVehicleStatus(@PathVariable Long groupId,@PathVariable Long vehicleId){
+
+    }
     @PostMapping("{groupId}/vehicles")
     private ResponseEntity<Vehicle> addVehicle(@PathVariable Long groupId,@RequestBody Vehicle vehicle){
         vehicle.setGroupId(groupId);

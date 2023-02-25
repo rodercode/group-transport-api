@@ -39,6 +39,11 @@ public class VehicleService {
         vehicleRepo.save(vehicle);
     }
 
+    public void changeVehicleStatus(Vehicle vehicle, boolean vehicleStatus){
+        vehicle.setVehicleAvailable(vehicleStatus);
+        vehicleRepo.save(vehicle);
+    }
+
 
     public void removeVehicle(Long groupId){
        Vehicle vehicle = vehicleRepo.findById(groupId).get();
