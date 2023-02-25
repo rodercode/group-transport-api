@@ -20,6 +20,10 @@ public class VehicleService {
         this.crewRepository = crewRepository;
     }
 
+    public Optional<Vehicle> selectVehicle(Long vehicleId){
+        return vehicleRepo.findById(vehicleId);
+    }
+
     public List<Vehicle> selectVehicles(){
         return vehicleRepo.findAll();
     }
