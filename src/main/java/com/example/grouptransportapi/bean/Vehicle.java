@@ -6,6 +6,13 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity(name = "vehicles")
 public class Vehicle {
+
+    public Vehicle(String type, String location, boolean isVehicleAvailable) {
+        this.type = type;
+        this.location = location;
+        this.isVehicleAvailable = isVehicleAvailable;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 

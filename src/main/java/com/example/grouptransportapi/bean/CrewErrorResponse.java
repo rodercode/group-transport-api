@@ -1,10 +1,9 @@
 package com.example.grouptransportapi.bean;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import java.time.ZonedDateTime;
 
-@Data
+import lombok.*;
+
+import java.time.ZonedDateTime;
+@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class CrewErrorResponse {

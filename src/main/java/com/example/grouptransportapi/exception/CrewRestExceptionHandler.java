@@ -1,6 +1,4 @@
 package com.example.grouptransportapi.exception;
-
-
 import com.example.grouptransportapi.bean.CrewErrorResponse;
 import com.example.grouptransportapi.handler.ListEmptyException;
 import com.example.grouptransportapi.handler.ResourceNotFoundException;
