@@ -39,8 +39,8 @@ public class VehicleService {
         vehicleRepo.save(vehicle);
     }
 
-    public void changeVehicleStatus(Vehicle vehicle, boolean vehicleStatus){
-        vehicle.setVehicleAvailable(vehicleStatus);
+    public void changeVehicleStatus(Vehicle vehicle,boolean status){
+        vehicle.setVehicleAvailable(status);
         vehicleRepo.save(vehicle);
     }
 

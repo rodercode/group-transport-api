@@ -27,6 +27,7 @@ public class CrewRestController {
         groupService.createGroup(group);
         return new ResponseEntity<>(group, HttpStatus.CREATED);
     }
+    
     @PostMapping("{groupId}/members")
     private ResponseEntity<Crew> addMember(@PathVariable Long groupId) {
             Crew group = groupService.addMember(groupId);
@@ -41,9 +42,11 @@ public class CrewRestController {
     private ResponseEntity<List<Vehicle>> selectAllVehiclesByGroupId(@PathVariable Long groupId){
         return ResponseEntity.ok(vehicleService.selectVehiclesByGroupId(groupId));
     }
-    @PutMapping("{groupId}/vehicles/{vehicleId}/status")
-    private ResponseEntity<Vehicle> changeVehicleStatus(@PathVariable Long groupId,@PathVariable Long vehicleId){
-
+    @PutMapping("{groupId}/vehicles/{vehicleId}/{status}")
+    private ResponseEntity<Vehicle> changeVehicleStatus(@PathVariable Long groupId,@PathVariable Long vehicleId,@PathVariable boolean status){
+        Vehicle vehicle = vehicleService.selectVehicle(vehicleId).get();
+        vehicleService.changeVehicleStatus(vehicle,status);
+        return ResponseEntity.ok(vehicle);
     }
     @PostMapping("{groupId}/vehicles")
     private ResponseEntity<Vehicle> addVehicle(@PathVariable Long groupId,@RequestBody Vehicle vehicle){
