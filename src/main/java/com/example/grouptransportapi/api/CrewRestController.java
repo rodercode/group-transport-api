@@ -43,10 +43,10 @@ public class CrewRestController {
         vehicleService.createVehicle(vehicle);
         return new ResponseEntity<>(vehicle, HttpStatus.CREATED);
     }
-//    @DeleteMapping("api/vehicles/{vehicleId}")
-//    private ResponseEntity<Vehicle> removeVehicle(@PathVariable Long vehicleId){
-//
-//        vehicleService.removeVehicle(vehicleId);
-//        return ResponseEntity.ok();
-//    }
+    @DeleteMapping("api/vehicles/{vehicleId}")
+    private ResponseEntity<Vehicle> removeVehicle(@PathVariable Long vehicleId){
+        Vehicle vehicle = vehicleService.selectVehicle(vehicleId).get();
+        vehicleService.removeVehicle(vehicleId);
+        return ResponseEntity.ok(vehicle);
+    }
 }
