@@ -1,5 +1,4 @@
 package com.example.grouptransportapi.api;
-
 import com.example.grouptransportapi.bean.Guild;
 import com.example.grouptransportapi.bean.Vehicle;
 import com.example.grouptransportapi.service.GuildService;
@@ -7,14 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
 @RestController
 @RequestMapping("api/groups")
 public class GuildRestController {
     private final GuildService guildService;
-
     @Autowired
     public GuildRestController(GuildService guildService) {
         this.guildService = guildService;
