@@ -34,10 +34,8 @@ public class GuildRestController {
 
     // Register Vehicle To A Guild
     @PostMapping("{groupId}/vehicles")
-    private ResponseEntity<Vehicle> addVehicle(@PathVariable Long groupId,
-                                               @RequestBody Vehicle vehicle) {
-        vehicle.setGroupId(groupId);
-        guildService.addVehicle(vehicle);
+    private ResponseEntity<Vehicle> addVehicle(@PathVariable Long groupId, @RequestBody Vehicle vehicle) {
+        guildService.addVehicle(vehicle, groupId);
         return new ResponseEntity<>(vehicle, HttpStatus.CREATED);
     }
 

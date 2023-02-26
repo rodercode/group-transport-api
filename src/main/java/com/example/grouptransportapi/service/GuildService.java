@@ -1,4 +1,5 @@
 package com.example.grouptransportapi.service;
+
 import com.example.grouptransportapi.bean.Guild;
 import com.example.grouptransportapi.bean.Vehicle;
 import com.example.grouptransportapi.dao.GuildRepository;
@@ -48,13 +49,18 @@ public class GuildService {
     }
 
     // Add Vehicle To A Guild *
-    public void addVehicle(Vehicle vehicle) {
-        Guild crew = guildRepo.findById(vehicle.getGroupId()).get();
-        int vehicles = crew.getVehicle();
-        crew.setVehicle(vehicles + 1);
-        vehicle.setGroupId(crew.getId());
-        guildRepo.save(crew);
+    public void addVehicle(Vehicle vehicle, Long guildId) {
+        // set groupId to a vehicle and get guild by id
+        vehicle.setGroupId(guildId);
+        Guild guild = guildRepo.findById(guildId).get();
+
+        // increase vehicles display in the group
+        int vehicles = guild.getVehicle();
+        guild.setVehicle(vehicles + 1);
+
+        //save changes
         vehicleRepo.save(vehicle);
+        guildRepo.save(guild);
     }
 
     // Remove Vehicle From A Guild *
@@ -68,6 +74,7 @@ public class GuildService {
             guildRepo.save(guild);
         }
     }
+
     // Get All Vehicles From A Guild
     public List<Vehicle> selectVehiclesByGroupId(Long groupId) {
         return vehicleRepo.findAllByGroupId(groupId);
