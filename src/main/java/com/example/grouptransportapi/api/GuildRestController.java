@@ -59,7 +59,7 @@ public class GuildRestController {
         return ResponseEntity.ok(guildService.selectVehiclesByGroupId(groupId));
     }
 
-    // Change Status Of A Vehicle In A Group
+    // Change State Of A Group Vehicle
     @PutMapping("{groupId}/vehicles/{vehicleId}/{status}/{duration}")
     private ResponseEntity<Vehicle> changeVehicleStatus(@PathVariable boolean status,
                                                         @PathVariable Long vehicleId,
@@ -68,6 +68,10 @@ public class GuildRestController {
         guildService.changeVehicleStatus(vehicleId, status, duration);
         return ResponseEntity.ok(vehicle);
     }
+
+    // Register Group Walk -- Under Development
+
+    // Unregister Group Walk -- Under Development
 
     // Testing endpoints --------------------------------------------------------
 

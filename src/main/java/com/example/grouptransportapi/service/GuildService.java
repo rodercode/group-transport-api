@@ -35,7 +35,7 @@ public class GuildService {
         }
     }
 
-    // Add Register new member to a Group *
+    // Register New Member To A Group *
     public Guild addMember(Long groupId) {
         if (guildRepo.findById(groupId).isEmpty()) {
             throw new ResourceNotFoundException("no group exist with this id");
@@ -48,7 +48,7 @@ public class GuildService {
         }
     }
 
-    // Add Vehicle To a Group *
+    // Add Vehicle To A Group *
     public void addVehicle(Vehicle vehicle) {
         Guild crew = guildRepo.findById(vehicle.getGroupId()).get();
         int vehicles = crew.getVehicle();
@@ -58,7 +58,7 @@ public class GuildService {
         vehicleRepo.save(vehicle);
     }
 
-    // Remove Vehicle From a Group *
+    // Remove Vehicle From A Group *
     public void removeVehicle(Long groupId) {
         if (guildRepo.findById(groupId).isEmpty()) {
             throw new ResourceNotFoundException("no group exist with this id");
@@ -69,13 +69,12 @@ public class GuildService {
             guildRepo.save(guild);
         }
     }
-
-    // print out a list of vehicles that belong to a Group *
+    // Get All Vehicles From A Group
     public List<Vehicle> selectVehiclesByGroupId(Long groupId) {
         return vehicleRepo.findAllByGroupId(groupId);
     }
 
-    // set a vehicle to unavailable -- Crud method under production
+    // Change State Of A Group Vehicle -- Under Development
 
 
 
