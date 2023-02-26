@@ -36,18 +36,15 @@ public class GuildService {
     }
 
     // Register New Member To A Guild *
-    public Guild addMember(Long groupId) {
-        if (guildRepo.findById(groupId).isEmpty()) {
+    public void addMember(Long guildId) {
+        if (guildRepo.findById(guildId).isEmpty()) {
             throw new ResourceNotFoundException("no group exist with this id");
         } else {
-            Guild guild = guildRepo.findById(groupId).get();
-            int members = guild.getMembers();
-            guild.setMembers(members + 1);
+            Guild guild = guildRepo.findById(guildId).get();
+            guild.setMembers(guild.getMembers() + 1);
             guildRepo.save(guild);
-            return guild;
         }
     }
-
     // Add Vehicle To A Guild *
     public void addVehicle(Vehicle vehicle, Long guildId) {
         // set groupId to a vehicle and get guild by id
@@ -58,7 +55,6 @@ public class GuildService {
         int vehicles = guild.getVehicle();
         guild.setVehicle(vehicles + 1);
 
-        //save changes
         vehicleRepo.save(vehicle);
         guildRepo.save(guild);
     }

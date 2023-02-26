@@ -28,8 +28,9 @@ public class GuildRestController {
     // Register Member To Guild
     @PostMapping("{groupId}/members")
     private ResponseEntity<Guild> addMember(@PathVariable Long groupId) {
-        Guild group = guildService.addMember(groupId);
-        return ResponseEntity.ok(group);
+        guildService.addMember(groupId);
+        Guild guild = guildService.showGuildById(groupId).get();
+        return ResponseEntity.ok(guild);
     }
 
     // Register Vehicle To A Guild
