@@ -1,5 +1,5 @@
 package com.example.grouptransportapi.exception;
-import com.example.grouptransportapi.bean.CrewErrorResponse;
+import com.example.grouptransportapi.bean.ErrorResponse;
 import com.example.grouptransportapi.handler.ListEmptyException;
 import com.example.grouptransportapi.handler.ResourceNotFoundException;
 import com.example.grouptransportapi.handler.UniqueValidationException;
@@ -12,10 +12,10 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 @ControllerAdvice
-public class CrewRestExceptionHandler {
+public class GuildRestExceptionHandler {
     @ExceptionHandler
-    public ResponseEntity<CrewErrorResponse> handleException(ListEmptyException e) {
-        CrewErrorResponse error = new CrewErrorResponse
+    public ResponseEntity<ErrorResponse> handleException(ListEmptyException e) {
+        ErrorResponse error = new ErrorResponse
                 (
                         HttpStatus.NO_CONTENT.value(),
                         e.getMessage(),
@@ -23,10 +23,9 @@ public class CrewRestExceptionHandler {
                 );
         return new ResponseEntity<>(error, HttpStatus.NO_CONTENT);
     }
-
     @ExceptionHandler
-    public ResponseEntity<CrewErrorResponse> handleException(ResourceNotFoundException e) {
-        CrewErrorResponse error = new CrewErrorResponse
+    public ResponseEntity<ErrorResponse> handleException(ResourceNotFoundException e) {
+        ErrorResponse error = new ErrorResponse
                 (
                         HttpStatus.NOT_FOUND.value(),
                         e.getMessage(),
@@ -35,8 +34,8 @@ public class CrewRestExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler
-    public ResponseEntity<CrewErrorResponse> handleException(UniqueValidationException e){
-        CrewErrorResponse error = new CrewErrorResponse
+    public ResponseEntity<ErrorResponse> handleException(UniqueValidationException e){
+        ErrorResponse error = new ErrorResponse
                 (
                         HttpStatus.UNPROCESSABLE_ENTITY.value(),
                         e.getMessage(),
