@@ -1,5 +1,4 @@
 package com.example.grouptransportapi.service;
-
 import com.example.grouptransportapi.bean.Guild;
 import com.example.grouptransportapi.bean.Vehicle;
 import com.example.grouptransportapi.dao.GuildRepository;

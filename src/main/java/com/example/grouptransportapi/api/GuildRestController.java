@@ -3,7 +3,6 @@ package com.example.grouptransportapi.api;
 import com.example.grouptransportapi.bean.Guild;
 import com.example.grouptransportapi.bean.Vehicle;
 import com.example.grouptransportapi.service.GuildService;
-import com.example.grouptransportapi.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +41,7 @@ public class GuildRestController {
     private ResponseEntity<Vehicle> addVehicle(@PathVariable Long groupId,
                                                @RequestBody Vehicle vehicle) {
         vehicle.setGroupId(groupId);
-        guildService.createVehicle(vehicle);
+        guildService.addVehicle(vehicle);
         return new ResponseEntity<>(vehicle, HttpStatus.CREATED);
     }
 
@@ -60,14 +59,14 @@ public class GuildRestController {
     }
 
     // Change State Of A Group Vehicle
-    @PutMapping("{groupId}/vehicles/{vehicleId}/{status}/{duration}")
-    private ResponseEntity<Vehicle> changeVehicleStatus(@PathVariable boolean status,
-                                                        @PathVariable Long vehicleId,
-                                                        @PathVariable int duration) {
-        Vehicle vehicle = guildService.selectVehicle(vehicleId).get();
-        guildService.changeVehicleStatus(vehicleId, status, duration);
-        return ResponseEntity.ok(vehicle);
-    }
+//    @PutMapping("{groupId}/vehicles/{vehicleId}/{status}/{duration}")
+//    private ResponseEntity<Vehicle> changeVehicleStatus(@PathVariable boolean status,
+//                                                        @PathVariable Long vehicleId,
+//                                                        @PathVariable int duration) {
+//        Vehicle vehicle = guildService.selectVehicle(vehicleId).get();
+//        guildService.(vehicleId, status, duration);
+//        return ResponseEntity.ok(vehicle);
+//    }
 
     // Register Group Walk -- Under Development
 
