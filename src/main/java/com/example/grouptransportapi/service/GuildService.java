@@ -25,7 +25,7 @@ public class GuildService {
 
     // Necessary crud methods ------------------------------------------------------------
 
-    // Create New Group *
+    // Create New Guild *
     public void createGuild(Guild crew) {
         if (guildRepo.findByName(crew.getName()) != null)
             throw new UniqueValidationException("There already exist a Group with this name");
@@ -34,7 +34,7 @@ public class GuildService {
         }
     }
 
-    // Register New Member To A Group *
+    // Register New Member To A Guild *
     public Guild addMember(Long groupId) {
         if (guildRepo.findById(groupId).isEmpty()) {
             throw new ResourceNotFoundException("no group exist with this id");
@@ -47,7 +47,7 @@ public class GuildService {
         }
     }
 
-    // Add Vehicle To A Group *
+    // Add Vehicle To A Guild *
     public void addVehicle(Vehicle vehicle) {
         Guild crew = guildRepo.findById(vehicle.getGroupId()).get();
         int vehicles = crew.getVehicle();
@@ -57,7 +57,7 @@ public class GuildService {
         vehicleRepo.save(vehicle);
     }
 
-    // Remove Vehicle From A Group *
+    // Remove Vehicle From A Guild *
     public void removeVehicle(Long groupId) {
         if (guildRepo.findById(groupId).isEmpty()) {
             throw new ResourceNotFoundException("no group exist with this id");
@@ -68,19 +68,17 @@ public class GuildService {
             guildRepo.save(guild);
         }
     }
-    // Get All Vehicles From A Group
+    // Get All Vehicles From A Guild
     public List<Vehicle> selectVehiclesByGroupId(Long groupId) {
         return vehicleRepo.findAllByGroupId(groupId);
     }
 
-    // Change State Of A Group Vehicle -- Under Development
+    // Change State Of A Guild Vehicle -- Under Development
 
 
+    // Testing Crud Methods--------------------------------------------------------
 
-
-
-
-    // Show All Groups test
+    // Show All Groups
     public List<Guild> showGuilds() {
         if (guildRepo.findAll().isEmpty()) {
             throw new ListEmptyException("Group list is empty");
@@ -89,10 +87,7 @@ public class GuildService {
         }
     }
 
-
-    // Testing Crud Methods--------------------------------------------------------
-
-    // Remove Member From The Group
+    // Remove Member From The Guild
     public Guild removeMember(Long groupId) {
         if (guildRepo.findById(groupId).isEmpty()) {
             throw new ResourceNotFoundException("no group exist with this id");
@@ -105,12 +100,12 @@ public class GuildService {
         }
     }
 
-    // Show Group By id
+    // Show Guild By id
     public Optional<Guild> showGuildById(Long groupId) {
         return guildRepo.findById(groupId);
     }
 
-    // Delete Group
+    // Delete Guild
     public void removeGuild(Long groupId) {
         guildRepo.deleteById(groupId);
     }

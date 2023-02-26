@@ -32,7 +32,7 @@ public class GuildRestController {
         return ResponseEntity.ok(group);
     }
 
-    // Register Vehicle To A Group
+    // Register Vehicle To A Guild
     @PostMapping("{groupId}/vehicles")
     private ResponseEntity<Vehicle> addVehicle(@PathVariable Long groupId,
                                                @RequestBody Vehicle vehicle) {
@@ -41,20 +41,20 @@ public class GuildRestController {
         return new ResponseEntity<>(vehicle, HttpStatus.CREATED);
     }
 
-    // Unregister Vehicle From A Group
+    // Unregister Vehicle From A Guild
     @DeleteMapping("{groupId}/vehicles/{vehicleId}")
     private ResponseEntity<String> removeVehicle(@PathVariable Long groupId, @PathVariable Long vehicleId) {
         guildService.removeVehicle(vehicleId);
         return ResponseEntity.ok("Vehicle deleted successfully");
     }
 
-    // Get All Vehicles From A Group
+    // Get All Vehicles From A Guild
     @GetMapping("{groupId}/vehicles")
     private ResponseEntity<List<Vehicle>> selectAllVehiclesByGroupId(@PathVariable Long groupId) {
         return ResponseEntity.ok(guildService.selectVehiclesByGroupId(groupId));
     }
 
-    // Change State Of A Group Vehicle
+    // Change State Of A Guild Vehicle
 //    @PutMapping("{groupId}/vehicles/{vehicleId}/{status}/{duration}")
 //    private ResponseEntity<Vehicle> changeVehicleStatus(@PathVariable boolean status,
 //                                                        @PathVariable Long vehicleId,
@@ -64,9 +64,9 @@ public class GuildRestController {
 //        return ResponseEntity.ok(vehicle);
 //    }
 
-    // Register Group Walk -- Under Development
+    // Register Guild Walk -- Under Development
 
-    // Unregister Group Walk -- Under Development
+    // Unregister Guild Walk -- Under Development
 
     // Testing endpoints --------------------------------------------------------
 
@@ -76,7 +76,6 @@ public class GuildRestController {
         return ResponseEntity.ok(guildService.showGuilds());
 
     }
-
     // Delete A Guild
     @DeleteMapping("{groupId}")
     private ResponseEntity<String> deleteGroup(@PathVariable Long groupId) {
