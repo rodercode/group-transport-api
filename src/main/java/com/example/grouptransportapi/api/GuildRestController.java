@@ -26,7 +26,7 @@ public class GuildRestController {
     }
 
     // Register Member To Guild
-    @PostMapping("{groupId}/members")
+    @PutMapping("{groupId}/members")
     private ResponseEntity<Guild> addMember(@PathVariable Long groupId) {
         guildService.addMember(groupId);
         Guild guild = guildService.showGuildById(groupId).get();
@@ -34,7 +34,7 @@ public class GuildRestController {
     }
 
     // Register Vehicle To A Guild
-    @PostMapping("{groupId}/vehicles")
+    @PutMapping("{groupId}/vehicles")
     private ResponseEntity<Vehicle> addVehicle(@PathVariable Long groupId, @RequestBody Vehicle vehicle) {
         guildService.addVehicle(vehicle, groupId);
         return new ResponseEntity<>(vehicle, HttpStatus.CREATED);
