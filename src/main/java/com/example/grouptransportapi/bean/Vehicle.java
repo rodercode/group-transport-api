@@ -1,13 +1,11 @@
 package com.example.grouptransportapi.bean;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 @NoArgsConstructor
 @Setter @Getter
-@Entity(name = "vehicles")
+@Entity(name = "group_vehicles")
 public class Vehicle {
 
     @Id
@@ -23,7 +21,10 @@ public class Vehicle {
     private String location;
 
     @Column(name = "available")
-    private boolean isVehicleAvailable;
+    private boolean available = true;
+
+    @Column(name = "available_in", nullable = false)
+    private int availableIn;
 
     @Column(name = "group_id")
     private Long groupId;
