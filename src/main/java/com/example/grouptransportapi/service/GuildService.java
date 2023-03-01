@@ -1,9 +1,7 @@
 package com.example.grouptransportapi.service;
-
 import com.example.grouptransportapi.RestTempleCrud;
 import com.example.grouptransportapi.bean.Guild;
 import com.example.grouptransportapi.bean.RouteInfo;
-import com.example.grouptransportapi.bean.VehicleInfo;
 import com.example.grouptransportapi.dao.GuildRepository;
 import com.example.grouptransportapi.handler.ListEmptyException;
 import com.example.grouptransportapi.handler.ResourceNotFoundException;
@@ -31,7 +29,7 @@ public class GuildService {
     // Necessary crud methods ------------------------------------------------------------
     public List<RouteInfo> routes() {
         ResponseEntity<List<RouteInfo>> response = restTemplate.exchange(
-                "https://transportfinal-transport-service.azuremicroservices.io/routes/",
+                "https://microservice-enskild-trafik-enskild-trafik.azuremicroservices.io/routes/car",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<>() {
@@ -53,7 +51,7 @@ public class GuildService {
         guildRepo.deleteById(groupId);
     }
 
-    // Get Guild By Id
+    // Get Guild By ID
     public Optional<Guild> showGuildById(Long groupId) {
         return guildRepo.findById(groupId);
     }
@@ -77,7 +75,6 @@ public class GuildService {
             guildRepo.save(guild);
         }
     }
-
     // Unregister Member From The Guild
     public void removeMember(Long groupId) {
         if (guildRepo.findById(groupId).isEmpty()) {
