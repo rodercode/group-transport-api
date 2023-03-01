@@ -125,12 +125,15 @@ public class GuildService {
             guild.setAvailableVehicles(guild.getAvailableVehicles() - 1);
             guildRepo.save(guild);
         }
+
+
+        RouteInfo routeInfo = restTempleCrud.getRoutes(restTemplate).get(routeInfoId.intValue());
         restTempleCrud.updateVehicleStatus(
                 restTemplate,
                 vehicleInfoId,
-                guildId.intValue());
-       VehicleInfo vehicleInfo = restTempleCrud.getVehicleInfo(restTemplate, vehicleInfoId);
-       RouteInfo routeInfo = restTempleCrud.getRoutes(restTemplate).get(routeInfoId.intValue());
+                routeInfo.getTravelTime());
+        VehicleInfo vehicleInfo = restTempleCrud.getVehicleInfo(restTemplate, vehicleInfoId);
+        System.out.println(routeInfo.getTravelTime());
        return new Trip(vehicleInfo, routeInfo);
     }
 }

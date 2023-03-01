@@ -22,12 +22,12 @@ public class RestTempleCrud {
                 HttpMethod.PUT, entity, String.class).getBody();
     }
 
-    public void updateVehicleStatus(RestTemplate restTemplate, Long vehicleId, int groupId){
+    public void updateVehicleStatus(RestTemplate restTemplate, Long vehicleId, int time){
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<VehicleInfo> entity = new HttpEntity<>(headers);
         restTemplate.exchange(
-                "http://localhost:8081/vehicles/" + vehicleId + "/state/" + false,
+                "http://localhost:8081/vehicles/" + vehicleId + "/state/" + false+"/duration/"+ time ,
                 HttpMethod.PUT, entity, String.class).getBody();
     }
 
