@@ -119,7 +119,7 @@ public class GuildService {
     }
 
     // Change State Of A Guild Vehicle
-    public VehicleInfo changeStateVehicle(Long guildId, Long vehicleId, Long routeInfoId) {
+    public Trip changeStateVehicle(Long guildId, Long vehicleInfoId, Long routeInfoId) {
         Guild guild = guildRepo.findById(guildId).get();
         if (guild.getAvailableVehicles() > 0) {
             guild.setAvailableVehicles(guild.getAvailableVehicles() - 1);
@@ -127,10 +127,10 @@ public class GuildService {
         }
         restTempleCrud.updateVehicleStatus(
                 restTemplate,
-                vehicleId,
+                vehicleInfoId,
                 guildId.intValue());
-       return restTempleCrud.getVehicleInfo(restTemplate, vehicleId);
-//        RouteInfo routeInfo = restTempleCrud.getRoutes(restTemplate).get(routeInfoId.intValue());
-//        return new Trip(vehicleInfo, routeInfo);
+       VehicleInfo vehicleInfo = restTempleCrud.getVehicleInfo(restTemplate, vehicleInfoId);
+       RouteInfo routeInfo = restTempleCrud.getRoutes(restTemplate).get(routeInfoId.intValue());
+       return new Trip(vehicleInfo, routeInfo);
     }
 }

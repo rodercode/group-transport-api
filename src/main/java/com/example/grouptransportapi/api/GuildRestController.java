@@ -59,9 +59,9 @@ public class GuildRestController {
         return guildService.removeVehicle(groupId,vehicleId);
     }
      //Group Memeber Use Vehicle
-    @PutMapping("{guildId}/vehicles/{vehicleId}")
-    private ResponseEntity<VehicleInfo> userVehicle(@PathVariable Long guildId, @PathVariable Long vehicleId,@PathVariable Long routeId){
-        return ResponseEntity.ok(guildService.changeStateVehicle(guildId,vehicleId,routeId));
+    @PutMapping("{guildId}/vehicles/{vehicleId}/route/{routeInfoId}")
+    private ResponseEntity<Trip> userVehicle(@PathVariable Long guildId, @PathVariable Long vehicleId,@PathVariable Long routeInfoId){
+        return ResponseEntity.ok(guildService.changeStateVehicle(guildId,vehicleId,routeInfoId));
     }
 
     // Register Guild Walk -- Under Development
