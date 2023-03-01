@@ -1,6 +1,7 @@
 package com.example.grouptransportapi.api;
 import com.example.grouptransportapi.bean.Guild;
 import com.example.grouptransportapi.bean.RouteInfo;
+import com.example.grouptransportapi.bean.Trip;
 import com.example.grouptransportapi.bean.VehicleInfo;
 import com.example.grouptransportapi.service.GuildService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,10 +59,9 @@ public class GuildRestController {
         return guildService.removeVehicle(groupId,vehicleId);
     }
      //Group Memeber Use Vehicle
-    @PutMapping("{guildId}/vehicles/{vehicleId}/")
-    private ResponseEntity<String> userVehicle(@PathVariable Long guildId, @PathVariable Long vehicleId){
-        guildService.changeStateVehicle(guildId,vehicleId);
-        return ResponseEntity.ok("group Member use a vehicle");
+    @PutMapping("{guildId}/vehicles/{vehicleId}")
+    private ResponseEntity<VehicleInfo> userVehicle(@PathVariable Long guildId, @PathVariable Long vehicleId,@PathVariable Long routeId){
+        return ResponseEntity.ok(guildService.changeStateVehicle(guildId,vehicleId,routeId));
     }
 
     // Register Guild Walk -- Under Development

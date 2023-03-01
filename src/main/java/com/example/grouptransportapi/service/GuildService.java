@@ -2,6 +2,8 @@ package com.example.grouptransportapi.service;
 import com.example.grouptransportapi.RestTempleCrud;
 import com.example.grouptransportapi.bean.Guild;
 import com.example.grouptransportapi.bean.RouteInfo;
+import com.example.grouptransportapi.bean.Trip;
+import com.example.grouptransportapi.bean.VehicleInfo;
 import com.example.grouptransportapi.dao.GuildRepository;
 import com.example.grouptransportapi.handler.ListEmptyException;
 import com.example.grouptransportapi.handler.ResourceNotFoundException;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.RouteMatcher;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
@@ -75,6 +78,7 @@ public class GuildService {
             guildRepo.save(guild);
         }
     }
+
     // Unregister Member From The Guild
     public void removeMember(Long groupId) {
         if (guildRepo.findById(groupId).isEmpty()) {
@@ -115,15 +119,18 @@ public class GuildService {
     }
 
     // Change State Of A Guild Vehicle
-    public String changeStateVehicle(Long groupId, Long vehicleId) {
-        Guild guild = guildRepo.findById(groupId).get();
+    public VehicleInfo changeStateVehicle(Long guildId, Long vehicleId, Long routeInfoId) {
+        Guild guild = guildRepo.findById(guildId).get();
         if (guild.getAvailableVehicles() > 0) {
             guild.setAvailableVehicles(guild.getAvailableVehicles() - 1);
             guildRepo.save(guild);
         }
-        return restTempleCrud.updateVehicleStatus(
+        restTempleCrud.updateVehicleStatus(
                 restTemplate,
                 vehicleId,
-                groupId.intValue());
+                guildId.intValue());
+       return restTempleCrud.getVehicleInfo(restTemplate, vehicleId);
+//        RouteInfo routeInfo = restTempleCrud.getRoutes(restTemplate).get(routeInfoId.intValue());
+//        return new Trip(vehicleInfo, routeInfo);
     }
 }
