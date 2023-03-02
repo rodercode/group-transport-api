@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
@@ -93,58 +94,66 @@ public class GuildService {
     }
 
     // Add Vehicle To A Guild *
-    public String addVehicle(Long groupId, Long vehicleId) {
-        if (guildRepo.findById(groupId).isEmpty())
-            throw new ResourceNotFoundException("no guild exist with this id");
+    public String addVehicle(Long guildId, Long vehicleId) {
+        if (guildRepo.findById(guildId).isEmpty())
+            throw new ResourceNotFoundException("no Guild exist with this id");
         else {
             // increase vehicle display in a guild
-            Guild guild = guildRepo.findById(groupId).get();
+            Guild guild = guildRepo.findById(guildId).get();
             guild.setGroupVehicles(guild.getGroupVehicles() + 1);
             guild.setAvailableVehicles(guild.getAvailableVehicles() + 1);
             guildRepo.save(guild);
-
+        }
+        try {
             //change groupId for a Vehicle
-            return restTempleCrud.updateVehicleGroupId(restTemplate, vehicleId, groupId.intValue());
+            return restTempleCrud.updateVehicleGroupId(restTemplate, vehicleId, guildId.intValue());
+        } catch (HttpClientErrorException e) {
+            throw new ResourceNotFoundException("no vehicle exist with this id");
         }
     }
 
-    // Remove Vehicle From A Guild *
-    public String removeVehicle(Long guildId, Long vehicleId) {
 
-        if (guildRepo.findById(guildId).isEmpty())
-            throw new ResourceNotFoundException("no guild exist with this id");
-        else {
-            // decrease vehicle display in a guild
-            Guild guild = guildRepo.findById(guildId).get();
-            if (guild.getGroupVehicles() > 0) {
-                guild.setGroupVehicles(guild.getGroupVehicles() - 1);
-                guild.setAvailableVehicles(guild.getAvailableVehicles() - 1);
-                guildRepo.save(guild);
+        // Remove Vehicle From A Guild *
+        public String removeVehicle (Long guildId, Long vehicleId){
+            if (guildRepo.findById(guildId).isEmpty())
+                throw new ResourceNotFoundException("no guild exist with this id");
+            else {
+                // decrease vehicle display in a guild
+                Guild guild = guildRepo.findById(guildId).get();
+                if (guild.getGroupVehicles() > 0) {
+                    guild.setGroupVehicles(guild.getGroupVehicles() - 1);
+                    guild.setAvailableVehicles(guild.getAvailableVehicles() - 1);
+                    guildRepo.save(guild);
+                }
             }
-            return restTempleCrud.updateVehicleGroupId(restTemplate,
-                    vehicleId, 0);
-        }
-    }
-
-    // Change State Of A Guild Vehicle
-    public Trip changeStateVehicle(Long guildId, Long vehicleInfoId, Long routeInfoId) {
-        if (guildRepo.findById(guildId).isEmpty())
-            throw new ResourceNotFoundException("no guild exist with this id");
-        else {
-            Guild guild = guildRepo.findById(guildId).get();
-            if (guild.getAvailableVehicles() > 0) {
-                guild.setAvailableVehicles(guild.getAvailableVehicles() - 1);
-                guildRepo.save(guild);
+            try {
+                return restTempleCrud.updateVehicleGroupId(restTemplate,
+                        vehicleId, 0);
+            }catch (HttpClientErrorException e){
+                throw new ResourceNotFoundException("no vehicle exist with thid id");
             }
-
-            RouteInfo routeInfo = restTempleCrud.getRoutes(restTemplate).get(routeInfoId.intValue());
-            restTempleCrud.updateVehicleStatus(
-                    restTemplate,
-                    vehicleInfoId,
-                    routeInfo.getTravelTime());
-            VehicleInfo vehicleInfo = restTempleCrud.getVehicleInfo(restTemplate, vehicleInfoId);
-            System.out.println(routeInfo.getTravelTime());
-            return new Trip(vehicleInfo, routeInfo);
         }
-    }
+
+        // Change State Of A Guild Vehicle
+        public Trip changeStateVehicle (Long guildId, Long vehicleInfoId, Long routeInfoId){
+            if (guildRepo.findById(guildId).isEmpty())
+                throw new ResourceNotFoundException("no guild exist with this id");
+            else {
+                Guild guild = guildRepo.findById(guildId).get();
+                if (guild.getAvailableVehicles() > 0) {
+                    guild.setAvailableVehicles(guild.getAvailableVehicles() - 1);
+                    guildRepo.save(guild);
+                }
+
+                RouteInfo routeInfo = restTempleCrud.getRoutes(restTemplate).get(routeInfoId.intValue());
+                restTempleCrud.updateVehicleStatus(
+                        restTemplate,
+                        vehicleInfoId,
+                        routeInfo.getTravelTime());
+                Optional<VehicleInfo> vehicleInfo = restTempleCrud.getVehicle(restTemplate, vehicleInfoId);
+                System.out.println(routeInfo.getTravelTime());
+                return new Trip(vehicleInfo.get(), routeInfo);
+            }
+        }
+
 }

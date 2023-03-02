@@ -1,6 +1,6 @@
 package com.example.grouptransportapi.api;
+import com.example.grouptransportapi.RestTempleCrud;
 import com.example.grouptransportapi.bean.Guild;
-import com.example.grouptransportapi.bean.RouteInfo;
 import com.example.grouptransportapi.bean.Trip;
 import com.example.grouptransportapi.bean.VehicleInfo;
 import com.example.grouptransportapi.service.GuildService;
@@ -8,20 +8,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import java.util.Arrays;
+
 import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("guilds")
 public class GuildRestController {
     private final GuildService guildService;
+    private final RestTemplate restTemplate;
+    private  RestTempleCrud restTempleCrud = new RestTempleCrud();
     @Autowired
-    public GuildRestController(GuildService guildService) {
+    public GuildRestController(GuildService guildService, RestTemplate restTemplate) {
         this.guildService = guildService;
+        this.restTemplate = restTemplate;
+
     }
-//    @GetMapping("/routes")
-//    private List<RouteInfo> routes(){
-//        return guildService.routes();
-//    }
+
+    @GetMapping("/{vehicleId}")
+    private Optional<VehicleInfo> vehicle(@PathVariable Long vehicleId){
+        return restTempleCrud.getVehicle(restTemplate,vehicleId);
+    }
     // Create A Guild
     @PostMapping
     private ResponseEntity<Guild> createGroup(@RequestBody Guild guild) {

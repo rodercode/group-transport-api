@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class RestTempleCrud {
 
@@ -52,11 +53,11 @@ public class RestTempleCrud {
         return response.getBody();
     }
 
-    public VehicleInfo getVehicleInfo(RestTemplate restTemplate, Long vehiclieId){
+    public Optional<VehicleInfo> getVehicle(RestTemplate restTemplate, Long vehiclieId){
         ResponseEntity<VehicleInfo> responseEntity = restTemplate
                 .getForEntity("http://localhost:8081/vehicles/" + vehiclieId,
-                        VehicleInfo.class);
-        return responseEntity.getBody();
+                VehicleInfo.class);
+        return Optional.ofNullable(responseEntity.getBody());
     }
 
 }
