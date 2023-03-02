@@ -103,16 +103,9 @@ public class GuildService {
             guild.setGroupVehicles(guild.getGroupVehicles() + 1);
             guild.setAvailableVehicles(guild.getAvailableVehicles() + 1);
             guildRepo.save(guild);
-        }
-        try {
-            //change groupId for a Vehicle
             return restTempleCrud.updateVehicleGroupId(restTemplate, vehicleId, guildId.intValue());
-        } catch (HttpClientErrorException e) {
-            throw new ResourceNotFoundException("no vehicle exist with this id");
         }
     }
-
-
         // Remove Vehicle From A Guild *
         public String removeVehicle (Long guildId, Long vehicleId){
             if (guildRepo.findById(guildId).isEmpty())
@@ -124,13 +117,9 @@ public class GuildService {
                     guild.setGroupVehicles(guild.getGroupVehicles() - 1);
                     guild.setAvailableVehicles(guild.getAvailableVehicles() - 1);
                     guildRepo.save(guild);
+
                 }
-            }
-            try {
-                return restTempleCrud.updateVehicleGroupId(restTemplate,
-                        vehicleId, 0);
-            }catch (HttpClientErrorException e){
-                throw new ResourceNotFoundException("no vehicle exist with thid id");
+                return restTempleCrud.updateVehicleGroupId(restTemplate, vehicleId, guildId.intValue());
             }
         }
 

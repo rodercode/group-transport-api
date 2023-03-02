@@ -1,10 +1,10 @@
 package com.example.grouptransportapi;
-
 import com.example.grouptransportapi.bean.RouteInfo;
 import com.example.grouptransportapi.bean.VehicleInfo;
+import com.example.grouptransportapi.handler.ResourceNotFoundException;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
-import org.springframework.util.RouteMatcher;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
@@ -17,19 +17,26 @@ public class RestTempleCrud {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<VehicleInfo> entity = new HttpEntity<>(headers);
-        return restTemplate.exchange(
-                "http://localhost:8081/vehicles/"
-                        + vehicleId + "/groups/" + groupId,
-                HttpMethod.PUT, entity, String.class).getBody();
+
+        try {
+            return restTemplate.exchange(
+                    "http://localhost:8081/vehicles/"
+                            + vehicleId + "/groups/" + groupId,
+                    HttpMethod.PUT, entity, String.class).getBody();
+
+        }catch (HttpClientErrorException.NotFound e){
+            throw new ResourceNotFoundException("No vehicle exist with this id");
+        }
     }
 
     public void updateVehicleStatus(RestTemplate restTemplate, Long vehicleId, int time){
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<VehicleInfo> entity = new HttpEntity<>(headers);
-        restTemplate.exchange(
-                "http://localhost:8081/vehicles/" + vehicleId + "/state/" + false+"/duration/"+ time ,
-                HttpMethod.PUT, entity, String.class).getBody();
+
+            restTemplate.exchange(
+                    "http://localhost:8081/vehicles/" + vehicleId + "/state/" + false+"/duration/"+ time ,
+                    HttpMethod.PUT, entity, String.class).getBody();
     }
 
 
@@ -40,7 +47,7 @@ public class RestTempleCrud {
                 null,
                 new ParameterizedTypeReference<>() {
                 });
-        return response.getBody();
+            return response.getBody();
     }
 
     public List<VehicleInfo> getVehicles(RestTemplate restTemplate){
