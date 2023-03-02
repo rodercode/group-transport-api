@@ -18,10 +18,10 @@ public class GuildRestController {
     public GuildRestController(GuildService guildService) {
         this.guildService = guildService;
     }
-    @GetMapping("/routes")
-    private List<RouteInfo> routes(){
-        return guildService.routes();
-    }
+//    @GetMapping("/routes")
+//    private List<RouteInfo> routes(){
+//        return guildService.routes();
+//    }
     // Create A Guild
     @PostMapping
     private ResponseEntity<Guild> createGroup(@RequestBody Guild guild) {

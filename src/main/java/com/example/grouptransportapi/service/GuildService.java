@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.util.RouteMatcher;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
@@ -30,17 +29,17 @@ public class GuildService {
     }
 
     // Necessary crud methods ------------------------------------------------------------
-    public List<RouteInfo> routes() {
-        ResponseEntity<List<RouteInfo>> response = restTemplate.exchange(
-                "https://microservice-enskild-trafik-enskild-trafik.azuremicroservices.io/routes/car",
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<>() {
-                });
-        return response.getBody();
-    }
+//    public List<RouteInfo> routes() {
+//        ResponseEntity<List<RouteInfo>> response = restTemplate.exchange(
+//                "https://microservice-enskild-trafik-enskild-trafik.azuremicroservices.io/routes/car",
+//                HttpMethod.GET,
+//                null,
+//                new ParameterizedTypeReference<>() {
+//                });
+//        return response.getBody();
+//    }
 
-    // Create New Guild *
+    // Create New Guild
     public void createGuild(Guild guild) {
         if (guildRepo.findByName(guild.getName()) != null)
             throw new UniqueValidationException("There already exist a Group with this name");
@@ -51,6 +50,7 @@ public class GuildService {
 
     // Delete Guild
     public void removeGuild(Long groupId) {
+
         guildRepo.deleteById(groupId);
     }
 
@@ -125,7 +125,6 @@ public class GuildService {
             guild.setAvailableVehicles(guild.getAvailableVehicles() - 1);
             guildRepo.save(guild);
         }
-
 
         RouteInfo routeInfo = restTempleCrud.getRoutes(restTemplate).get(routeInfoId.intValue());
         restTempleCrud.updateVehicleStatus(
