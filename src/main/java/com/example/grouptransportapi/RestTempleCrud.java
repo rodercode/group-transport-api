@@ -30,23 +30,28 @@ public class RestTempleCrud {
     }
 
     public void updateVehicleStatus(RestTemplate restTemplate, Long vehicleId, int time){
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        HttpEntity<VehicleInfo> entity = new HttpEntity<>(headers);
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+            HttpEntity<VehicleInfo> entity = new HttpEntity<>(headers);
 
             restTemplate.exchange(
                     "http://localhost:8081/vehicles/" + vehicleId + "/state/" + false+"/duration/"+ time ,
                     HttpMethod.PUT, entity, String.class).getBody();
+        }catch (Exception e){
+            throw new ResourceNotFoundException("no vehicle exist with this id");
+        }
+
     }
 
 
     public List<RouteInfo> getRoutes(RestTemplate restTemplate){
-        ResponseEntity<List<RouteInfo>> response = restTemplate.exchange(
-                "https://microservice-enskild-trafik-enskild-trafik.azuremicroservices.io/routes/car",
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<>() {
-                });
+            ResponseEntity<List<RouteInfo>> response = restTemplate.exchange(
+                    "https://microservice-enskild-trafik-enskild-trafik.azuremicroservices.io/routes/car",
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<>() {
+                    });
             return response.getBody();
     }
 

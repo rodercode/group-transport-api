@@ -133,15 +133,17 @@ public class GuildService {
                     guild.setAvailableVehicles(guild.getAvailableVehicles() - 1);
                     guildRepo.save(guild);
                 }
-
-                RouteInfo routeInfo = restTempleCrud.getRoutes(restTemplate).get(routeInfoId.intValue());
-                restTempleCrud.updateVehicleStatus(
-                        restTemplate,
-                        vehicleInfoId,
-                        routeInfo.getTravelTime());
-                Optional<VehicleInfo> vehicleInfo = restTempleCrud.getVehicle(restTemplate, vehicleInfoId);
-                System.out.println(routeInfo.getTravelTime());
-                return new Trip(vehicleInfo.get(), routeInfo);
+                try {
+                    RouteInfo routeInfo = restTempleCrud.getRoutes(restTemplate).get(routeInfoId.intValue());
+                    restTempleCrud.updateVehicleStatus(
+                            restTemplate,
+                            vehicleInfoId,
+                            routeInfo.getTravelTime());
+                    Optional<VehicleInfo> vehicleInfo = restTempleCrud.getVehicle(restTemplate, vehicleInfoId);
+                    return new Trip(vehicleInfo.get(), routeInfo);
+                }catch (IndexOutOfBoundsException e){
+                    throw new ResourceNotFoundException("no route with this id");
+                }
             }
         }
 
