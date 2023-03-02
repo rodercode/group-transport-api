@@ -49,9 +49,10 @@ public class GuildService {
     }
 
     // Delete Guild
-    public void removeGuild(Long groupId) {
-
-        guildRepo.deleteById(groupId);
+    public void removeGuild(Long guildId) {
+        if (guildRepo.findById(guildId).isEmpty())
+            throw new ResourceNotFoundException("Guild does not exist by this id");
+        guildRepo.deleteById(guildId);
     }
 
     // Get Guild By ID
