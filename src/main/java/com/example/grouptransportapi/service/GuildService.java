@@ -147,4 +147,11 @@ public class GuildService {
             }
         }
 
+        // Register Guild Walk
+        public void registerGuildWalk(Long guildId){
+            Guild guild = guildRepo.findById(guildId).get();
+            int guildWalks = guild.getGuildWalk();
+            guild.setGuildWalk(guildWalks + 1);
+        }
+
 }
