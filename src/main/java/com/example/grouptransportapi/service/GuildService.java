@@ -109,13 +109,13 @@ public class GuildService {
     }
 
     // Remove Vehicle From A Guild *
-    public String removeVehicle(Long groupId, Long vehicleId) {
+    public String removeVehicle(Long guildId, Long vehicleId) {
 
-        if (guildRepo.findById(groupId).isEmpty())
+        if (guildRepo.findById(guildId).isEmpty())
             throw new ResourceNotFoundException("no guild exist with this id");
         else {
             // decrease vehicle display in a guild
-            Guild guild = guildRepo.findById(groupId).get();
+            Guild guild = guildRepo.findById(guildId).get();
             if (guild.getGroupVehicles() > 0) {
                 guild.setGroupVehicles(guild.getGroupVehicles() - 1);
                 guild.setAvailableVehicles(guild.getAvailableVehicles() - 1);
@@ -128,19 +128,23 @@ public class GuildService {
 
     // Change State Of A Guild Vehicle
     public Trip changeStateVehicle(Long guildId, Long vehicleInfoId, Long routeInfoId) {
-        Guild guild = guildRepo.findById(guildId).get();
-        if (guild.getAvailableVehicles() > 0) {
-            guild.setAvailableVehicles(guild.getAvailableVehicles() - 1);
-            guildRepo.save(guild);
-        }
+        if (guildRepo.findById(guildId).isEmpty())
+            throw new ResourceNotFoundException("no guild exist with this id");
+        else {
+            Guild guild = guildRepo.findById(guildId).get();
+            if (guild.getAvailableVehicles() > 0) {
+                guild.setAvailableVehicles(guild.getAvailableVehicles() - 1);
+                guildRepo.save(guild);
+            }
 
-        RouteInfo routeInfo = restTempleCrud.getRoutes(restTemplate).get(routeInfoId.intValue());
-        restTempleCrud.updateVehicleStatus(
-                restTemplate,
-                vehicleInfoId,
-                routeInfo.getTravelTime());
-        VehicleInfo vehicleInfo = restTempleCrud.getVehicleInfo(restTemplate, vehicleInfoId);
-        System.out.println(routeInfo.getTravelTime());
-        return new Trip(vehicleInfo, routeInfo);
+            RouteInfo routeInfo = restTempleCrud.getRoutes(restTemplate).get(routeInfoId.intValue());
+            restTempleCrud.updateVehicleStatus(
+                    restTemplate,
+                    vehicleInfoId,
+                    routeInfo.getTravelTime());
+            VehicleInfo vehicleInfo = restTempleCrud.getVehicleInfo(restTemplate, vehicleInfoId);
+            System.out.println(routeInfo.getTravelTime());
+            return new Trip(vehicleInfo, routeInfo);
+        }
     }
 }
