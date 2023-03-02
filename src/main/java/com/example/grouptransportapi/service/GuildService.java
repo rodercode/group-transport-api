@@ -1,4 +1,5 @@
 package com.example.grouptransportapi.service;
+
 import com.example.grouptransportapi.RestTempleCrud;
 import com.example.grouptransportapi.bean.Guild;
 import com.example.grouptransportapi.bean.RouteInfo;
@@ -57,13 +58,15 @@ public class GuildService {
 
     // Get Guild By ID
     public Optional<Guild> showGuildById(Long groupId) {
+        if (guildRepo.findById(groupId).isEmpty())
+            throw new ResourceNotFoundException("Guild with this id does not exist");
         return guildRepo.findById(groupId);
     }
 
     // Get All Guilds
     public List<Guild> getGuilds() {
         if (guildRepo.findAll().isEmpty()) {
-            throw new ListEmptyException("Group list is empty");
+            throw new ListEmptyException("Guild there are no Guilds in the database");
         } else {
             return guildRepo.findAll();
         }
@@ -71,14 +74,12 @@ public class GuildService {
 
     // Register New Member To A Guild *
     public void addMember(Long guildId) {
-        if (guildRepo.findById(guildId).isEmpty()) {
-            throw new ResourceNotFoundException("no group exist with this id");
-        } else {
-            Guild guild = guildRepo.findById(guildId).get();
-            guild.setMembers(guild.getMembers() + 1);
-            guildRepo.save(guild);
-        }
+        Guild guild = guildRepo.findById(guildId).get();
+        guild.setMembers(guild.getMembers() + 1);
+        guildRepo.save(guild);
     }
+
+
 
     // Unregister Member From The Guild
     public void removeMember(Long groupId) {
@@ -134,6 +135,6 @@ public class GuildService {
                 routeInfo.getTravelTime());
         VehicleInfo vehicleInfo = restTempleCrud.getVehicleInfo(restTemplate, vehicleInfoId);
         System.out.println(routeInfo.getTravelTime());
-       return new Trip(vehicleInfo, routeInfo);
+        return new Trip(vehicleInfo, routeInfo);
     }
 }
