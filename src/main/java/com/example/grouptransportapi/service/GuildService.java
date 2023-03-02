@@ -134,7 +134,7 @@ public class GuildService {
                     guildRepo.save(guild);
                 }
                 try {
-                    RouteInfo routeInfo = restTempleCrud.getRoutes(restTemplate).get(routeInfoId.intValue());
+                    RouteInfo routeInfo = restTempleCrud.getRoutes(restTemplate).get(routeInfoId.intValue()-1);
                     restTempleCrud.updateVehicleStatus(
                             restTemplate,
                             vehicleInfoId,
