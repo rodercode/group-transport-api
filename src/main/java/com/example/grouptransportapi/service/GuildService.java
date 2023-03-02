@@ -97,7 +97,7 @@ public class GuildService {
         if (guildRepo.findById(groupId).isEmpty())
             throw new ResourceNotFoundException("no guild exist with this id");
         else {
-            // increase vehicle display in Guild
+            // increase vehicle display in a guild
             Guild guild = guildRepo.findById(groupId).get();
             guild.setGroupVehicles(guild.getGroupVehicles() + 1);
             guild.setAvailableVehicles(guild.getAvailableVehicles() + 1);
@@ -110,15 +110,20 @@ public class GuildService {
 
     // Remove Vehicle From A Guild *
     public String removeVehicle(Long groupId, Long vehicleId) {
-        // decrease vehicle display
-        Guild guild = guildRepo.findById(groupId).get();
-        if (guild.getGroupVehicles() > 0) {
-            guild.setGroupVehicles(guild.getGroupVehicles() - 1);
-            guild.setAvailableVehicles(guild.getAvailableVehicles() - 1);
-            guildRepo.save(guild);
+
+        if (guildRepo.findById(groupId).isEmpty())
+            throw new ResourceNotFoundException("no guild exist with this id");
+        else {
+            // decrease vehicle display in a guild
+            Guild guild = guildRepo.findById(groupId).get();
+            if (guild.getGroupVehicles() > 0) {
+                guild.setGroupVehicles(guild.getGroupVehicles() - 1);
+                guild.setAvailableVehicles(guild.getAvailableVehicles() - 1);
+                guildRepo.save(guild);
+            }
+            return restTempleCrud.updateVehicleGroupId(restTemplate,
+                    vehicleId, 0);
         }
-        return restTempleCrud.updateVehicleGroupId(restTemplate,
-                vehicleId, 0);
     }
 
     // Change State Of A Guild Vehicle
