@@ -1,10 +1,8 @@
 package com.example.grouptransportapi;
-
 import com.example.grouptransportapi.bean.RouteInfo;
 import com.example.grouptransportapi.bean.VehicleInfo;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
-import org.springframework.util.RouteMatcher;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
@@ -17,7 +15,7 @@ public class RestTempleCrud {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<VehicleInfo> entity = new HttpEntity<>(headers);
         return restTemplate.exchange(
-                "http://localhost:8081/vehicles/"
+                "https://group-transport-service-vehicle-app.azuremicroservices.io/vehicles/"
                         + vehicleId + "/groups/" + groupId,
                 HttpMethod.PUT, entity, String.class).getBody();
     }
@@ -27,7 +25,7 @@ public class RestTempleCrud {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<VehicleInfo> entity = new HttpEntity<>(headers);
         restTemplate.exchange(
-                "http://localhost:8081/vehicles/" + vehicleId + "/state/" + false+"/duration/"+ time ,
+                "https://group-transport-service-vehicle-app.azuremicroservices.io/vehicles/" + vehicleId + "/state/" + false+"/duration/"+ time ,
                 HttpMethod.PUT, entity, String.class).getBody();
     }
 
@@ -44,7 +42,7 @@ public class RestTempleCrud {
 
     public List<VehicleInfo> getVehicles(RestTemplate restTemplate){
         ResponseEntity<List<VehicleInfo>> response = restTemplate.exchange(
-                "http://localhost:8081/vehicles",
+                "https://group-transport-service-vehicle-app.azuremicroservices.io/vehicles",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<>() {
@@ -54,7 +52,7 @@ public class RestTempleCrud {
 
     public VehicleInfo getVehicleInfo(RestTemplate restTemplate, Long vehiclieId){
         ResponseEntity<VehicleInfo> responseEntity = restTemplate
-                .getForEntity("http://localhost:8081/vehicles/" + vehiclieId,
+                .getForEntity("https://group-transport-service-vehicle-app.azuremicroservices.io/vehicles/" + vehiclieId,
                         VehicleInfo.class);
         return responseEntity.getBody();
     }
