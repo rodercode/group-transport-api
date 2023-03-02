@@ -25,4 +25,7 @@ public class Guild {
 
     @Column(name = "available_vehicles",nullable = false)
     private int availableVehicles;
+
+    @Column(name = "guild_walks",nullable = false)
+    private int guildWalk;
 }
