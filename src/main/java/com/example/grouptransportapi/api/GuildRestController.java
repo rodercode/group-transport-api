@@ -2,6 +2,7 @@ package com.example.grouptransportapi.api;
 import com.example.grouptransportapi.RestTempleCrud;
 import com.example.grouptransportapi.bean.Guild;
 import com.example.grouptransportapi.bean.Trip;
+import com.example.grouptransportapi.beaninfo.GuildWalkInfo;
 import com.example.grouptransportapi.beaninfo.VehicleInfo;
 import com.example.grouptransportapi.service.GuildService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,8 +79,8 @@ public class GuildRestController {
     }
     // register Guild Walk
     @PutMapping("{guildId}/guild-walks/register")
-    private ResponseEntity<Guild> addGuildWalk(@PathVariable Long guildId){
-        guildService.registerGuildWalk(guildId);
+    private ResponseEntity<Guild> addGuildWalk(@PathVariable Long guildId,@RequestBody GuildWalkInfo guildWalk){
+        guildService.registerGuildWalk(guildId,guildWalk);
         return ResponseEntity.ok(guildService.getGuildById(guildId).get());
     }
 

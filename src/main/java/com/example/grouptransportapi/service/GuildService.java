@@ -2,6 +2,7 @@ package com.example.grouptransportapi.service;
 
 import com.example.grouptransportapi.RestTempleCrud;
 import com.example.grouptransportapi.bean.Guild;
+import com.example.grouptransportapi.beaninfo.GuildWalkInfo;
 import com.example.grouptransportapi.beaninfo.RouteInfo;
 import com.example.grouptransportapi.bean.Trip;
 import com.example.grouptransportapi.beaninfo.VehicleInfo;
@@ -146,7 +147,7 @@ public class GuildService {
     }
 
     // Register Guild Walk
-    public void registerGuildWalk(Long guildId) {
+    public void registerGuildWalk(Long guildId,GuildWalkInfo guildWalk) {
         if (guildRepo.findById(guildId).isEmpty())
             throw new ResourceNotFoundException("Guild does not exist by this id");
         else {
@@ -157,8 +158,8 @@ public class GuildService {
 
             restTempleCrud.createGuildWalk(
                     restTemplate,
-                    "Guild Walk One",
-                    6,
+                    guildWalk.getName(),
+                    guildWalk.getMembers(),
                     guildId);
         }
     }
