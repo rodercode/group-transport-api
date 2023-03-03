@@ -103,52 +103,57 @@ public class GuildService {
             return restTempleCrud.updateVehicleGroupId(restTemplate, vehicleId, guildId.intValue());
         }
     }
-        // Remove Vehicle From A Guild *
-        public String removeVehicle (Long guildId, Long vehicleId){
-            if (guildRepo.findById(guildId).isEmpty())
-                throw new ResourceNotFoundException("no guild exist with this id");
-            else {
-                // decrease vehicle display in a guild
-                Guild guild = guildRepo.findById(guildId).get();
-                if (guild.getGroupVehicles() > 0) {
-                    guild.setGroupVehicles(guild.getGroupVehicles() - 1);
-                    guild.setAvailableVehicles(guild.getAvailableVehicles() - 1);
-                    guildRepo.save(guild);
 
-                }
-                return restTempleCrud.updateVehicleGroupId(restTemplate, vehicleId, guildId.intValue());
+    // Remove Vehicle From A Guild *
+    public String removeVehicle(Long guildId, Long vehicleId) {
+        if (guildRepo.findById(guildId).isEmpty())
+            throw new ResourceNotFoundException("no guild exist with this id");
+        else {
+            // decrease vehicle display in a guild
+            Guild guild = guildRepo.findById(guildId).get();
+            if (guild.getGroupVehicles() > 0) {
+                guild.setGroupVehicles(guild.getGroupVehicles() - 1);
+                guild.setAvailableVehicles(guild.getAvailableVehicles() - 1);
+                guildRepo.save(guild);
+
+            }
+            return restTempleCrud.updateVehicleGroupId(restTemplate, vehicleId, guildId.intValue());
+        }
+    }
+
+    // Change State Of A Guild Vehicle
+    public Trip changeStateVehicle(Long guildId, Long vehicleInfoId, Long routeInfoId) {
+        if (guildRepo.findById(guildId).isEmpty())
+            throw new ResourceNotFoundException("no guild exist with this id");
+        else {
+            Guild guild = guildRepo.findById(guildId).get();
+            if (guild.getAvailableVehicles() > 0) {
+                guild.setAvailableVehicles(guild.getAvailableVehicles() - 1);
+                guildRepo.save(guild);
+            }
+            try {
+                RouteInfo routeInfo = restTempleCrud.getRoutes(restTemplate).get(routeInfoId.intValue() - 1);
+                restTempleCrud.updateVehicleStatus(
+                        restTemplate,
+                        vehicleInfoId,
+                        routeInfo.getTravelTime());
+                Optional<VehicleInfo> vehicleInfo = restTempleCrud.getVehicle(restTemplate, vehicleInfoId);
+                return new Trip(vehicleInfo.get(), routeInfo);
+            } catch (IndexOutOfBoundsException e) {
+                throw new ResourceNotFoundException("no route with this id");
             }
         }
+    }
 
-        // Change State Of A Guild Vehicle
-        public Trip changeStateVehicle (Long guildId, Long vehicleInfoId, Long routeInfoId){
-            if (guildRepo.findById(guildId).isEmpty())
-                throw new ResourceNotFoundException("no guild exist with this id");
-            else {
-                Guild guild = guildRepo.findById(guildId).get();
-                if (guild.getAvailableVehicles() > 0) {
-                    guild.setAvailableVehicles(guild.getAvailableVehicles() - 1);
-                    guildRepo.save(guild);
-                }
-                try {
-                    RouteInfo routeInfo = restTempleCrud.getRoutes(restTemplate).get(routeInfoId.intValue()-1);
-                    restTempleCrud.updateVehicleStatus(
-                            restTemplate,
-                            vehicleInfoId,
-                            routeInfo.getTravelTime());
-                    Optional<VehicleInfo> vehicleInfo = restTempleCrud.getVehicle(restTemplate, vehicleInfoId);
-                    return new Trip(vehicleInfo.get(), routeInfo);
-                }catch (IndexOutOfBoundsException e){
-                    throw new ResourceNotFoundException("no route with this id");
-                }
-            }
-        }
-        // Register Guild Walk
-        public void registerGuildWalk(Long guildId){
+    // Register Guild Walk
+    public void registerGuildWalk(Long guildId) {
+        if (guildRepo.findById(guildId).isEmpty())
+            throw new ResourceNotFoundException("Guild does not exist by this id");
+        else {
             Guild guild = guildRepo.findById(guildId).get();
             int guildWalks = guild.getGuildWalk();
             guild.setGuildWalk(guildWalks + 1);
             guildRepo.save(guild);
         }
-
+    }
 }
