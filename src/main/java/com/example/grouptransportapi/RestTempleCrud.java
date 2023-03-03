@@ -1,5 +1,6 @@
 package com.example.grouptransportapi;
 
+import com.example.grouptransportapi.beaninfo.GuildWalkInfo;
 import com.example.grouptransportapi.beaninfo.RouteInfo;
 import com.example.grouptransportapi.beaninfo.VehicleInfo;
 import com.example.grouptransportapi.handler.ResourceNotFoundException;
@@ -74,12 +75,16 @@ public class RestTempleCrud {
         return Optional.ofNullable(responseEntity.getBody());
     }
 
-    public String createGuildWalk(RestTemplate restTemplate, String name, int members) {
+    public void createGuildWalk(RestTemplate restTemplate, String name, int members, Long guildId) {
+        GuildWalkInfo newGuildWalk = new GuildWalkInfo(name,members,guildId);
+
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        HttpEntity<> entity = new HttpEntity<Product>(product, headers);
+        HttpEntity<GuildWalkInfo> entity = new HttpEntity<GuildWalkInfo>(newGuildWalk, headers);
 
-        return restTemplate.exchange(
-                "http://localhost:8080/products", HttpMethod.POST, entity, String.class).getBody();
-
+        restTemplate.exchange(
+                "http://localhost:8082/guild-walks",
+                HttpMethod.POST,
+                entity,
+                String.class).getBody();
     }
