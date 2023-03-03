@@ -156,4 +156,15 @@ public class GuildService {
             guildRepo.save(guild);
         }
     }
+
+    // Unregister Guild Walk
+    public void unregisterGuildWalk(Long guildId){
+        Guild guild = guildRepo.findById(guildId).get();
+        int guildWalks = guild.getGuildWalk();
+
+        if (guildWalks > 0){
+            guild.setGuildWalk(guildWalks - 1);
+            guildRepo.save(guild);
+        }
+    }
 }
