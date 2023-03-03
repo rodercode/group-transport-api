@@ -12,10 +12,10 @@ public class GuildWalkInfo {
     private int members;
     private Long guildId;
 
+
     public GuildWalkInfo(String name, int members, Long guildId) {
         this.name = name;
         this.members = members;
         this.guildId = guildId;
     }
-
 }

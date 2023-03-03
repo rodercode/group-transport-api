@@ -83,7 +83,6 @@ public class GuildRestController {
         guildService.registerGuildWalk(guildId,guildWalk);
         return ResponseEntity.ok(guildService.getGuildById(guildId).get());
     }
-
     // Unregister Guild Walk -- Under Development
     @PutMapping("{guildId}/guild-walks/unregister")
     private ResponseEntity<Guild> removeGuildWalk(@PathVariable Long guildId){
