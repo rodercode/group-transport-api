@@ -158,13 +158,17 @@ public class GuildService {
     }
 
     // Unregister Guild Walk
-    public void unregisterGuildWalk(Long guildId){
-        Guild guild = guildRepo.findById(guildId).get();
-        int guildWalks = guild.getGuildWalk();
+    public void unregisterGuildWalk(Long guildId) {
+        if (guildRepo.findById(guildId).isEmpty())
+            throw new ResourceNotFoundException("Guild does not exist by this id");
+        else {
+            Guild guild = guildRepo.findById(guildId).get();
+            int guildWalks = guild.getGuildWalk();
 
-        if (guildWalks > 0){
-            guild.setGuildWalk(guildWalks - 1);
-            guildRepo.save(guild);
+            if (guildWalks > 0) {
+                guild.setGuildWalk(guildWalks - 1);
+                guildRepo.save(guild);
+            }
         }
     }
 }
