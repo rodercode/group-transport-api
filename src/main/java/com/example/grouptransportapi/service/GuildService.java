@@ -155,9 +155,11 @@ public class GuildService {
             guild.setGuildWalk(guildWalks + 1);
             guildRepo.save(guild);
 
-            
-
-
+            restTempleCrud.createGuildWalk(
+                    restTemplate,
+                    "Guild Walk One",
+                    6,
+                    guildId);
         }
     }
 
