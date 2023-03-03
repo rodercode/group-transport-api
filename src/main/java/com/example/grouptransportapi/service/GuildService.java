@@ -148,6 +148,7 @@ public class GuildService {
             Guild guild = guildRepo.findById(guildId).get();
             int guildWalks = guild.getGuildWalk();
             guild.setGuildWalk(guildWalks + 1);
+            guildRepo.save(guild);
         }
 
 }

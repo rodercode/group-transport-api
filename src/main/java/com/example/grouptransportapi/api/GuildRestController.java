@@ -24,7 +24,6 @@ public class GuildRestController {
         this.restTemplate = restTemplate;
 
     }
-
     @GetMapping
     private ResponseEntity<List<Guild>> getGuilds() {
         return ResponseEntity.ok(guildService.getGuilds());
@@ -51,14 +50,14 @@ public class GuildRestController {
     //Register Member To Guild
     @PutMapping("{guildId}/members/register")
     private ResponseEntity<Guild> addMember(@PathVariable Long guildId) {
-        Guild guild = guildService.showGuildById(guildId).get();
+        Guild guild = guildService.getGuildById(guildId).get();
         guildService.addMember(guildId);
         return ResponseEntity.ok(guild);
     }
     // UnRegister Member To Guild
     @PutMapping("{guildId}/members/unregister")
     private ResponseEntity<Guild> removeMember(@PathVariable Long guildId) {
-        Guild guild = guildService.showGuildById(guildId).get();
+        Guild guild = guildService.getGuildById(guildId).get();
         guildService.removeMember(guildId);
         return ResponseEntity.ok(guild);
     }
