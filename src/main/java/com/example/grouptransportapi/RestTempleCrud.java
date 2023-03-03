@@ -1,6 +1,6 @@
 package com.example.grouptransportapi;
-import com.example.grouptransportapi.bean.RouteInfo;
-import com.example.grouptransportapi.bean.VehicleInfo;
+import com.example.grouptransportapi.beaninfo.RouteInfo;
+import com.example.grouptransportapi.beaninfo.VehicleInfo;
 import com.example.grouptransportapi.handler.ResourceNotFoundException;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;

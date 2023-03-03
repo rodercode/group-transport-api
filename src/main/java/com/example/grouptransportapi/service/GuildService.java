@@ -2,18 +2,15 @@ package com.example.grouptransportapi.service;
 
 import com.example.grouptransportapi.RestTempleCrud;
 import com.example.grouptransportapi.bean.Guild;
-import com.example.grouptransportapi.bean.RouteInfo;
+import com.example.grouptransportapi.beaninfo.RouteInfo;
 import com.example.grouptransportapi.bean.Trip;
-import com.example.grouptransportapi.bean.VehicleInfo;
+import com.example.grouptransportapi.beaninfo.VehicleInfo;
 import com.example.grouptransportapi.dao.GuildRepository;
 import com.example.grouptransportapi.handler.ListEmptyException;
 import com.example.grouptransportapi.handler.ResourceNotFoundException;
 import com.example.grouptransportapi.handler.UniqueValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
@@ -58,7 +55,7 @@ public class GuildService {
     }
 
     // Get Guild By ID
-    public Optional<Guild> showGuildById(Long groupId) {
+    public Optional<Guild> getGuildById(Long groupId) {
         if (guildRepo.findById(groupId).isEmpty())
             throw new ResourceNotFoundException("Guild with this id does not exist");
         return guildRepo.findById(groupId);
@@ -146,7 +143,6 @@ public class GuildService {
                 }
             }
         }
-
         // Register Guild Walk
         public void registerGuildWalk(Long guildId){
             Guild guild = guildRepo.findById(guildId).get();

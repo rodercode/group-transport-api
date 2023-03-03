@@ -2,7 +2,7 @@ package com.example.grouptransportapi.api;
 import com.example.grouptransportapi.RestTempleCrud;
 import com.example.grouptransportapi.bean.Guild;
 import com.example.grouptransportapi.bean.Trip;
-import com.example.grouptransportapi.bean.VehicleInfo;
+import com.example.grouptransportapi.beaninfo.VehicleInfo;
 import com.example.grouptransportapi.service.GuildService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -25,9 +25,9 @@ public class GuildRestController {
 
     }
 
-    @GetMapping("/{vehicleId}")
-    private Optional<VehicleInfo> vehicle(@PathVariable Long vehicleId){
-        return restTempleCrud.getVehicle(restTemplate,vehicleId);
+    @GetMapping
+    private ResponseEntity<List<Guild>> getGuilds() {
+        return ResponseEntity.ok(guildService.getGuilds());
     }
     // Create A Guild
     @PostMapping
@@ -35,40 +35,53 @@ public class GuildRestController {
         guildService.createGuild(guild);
         return new ResponseEntity<>(guild, HttpStatus.CREATED);
     }
+
+    @GetMapping("/{vehicleId}")
+    private Optional<VehicleInfo> vehicle(@PathVariable Long vehicleId){
+        return restTempleCrud.getVehicle(restTemplate,vehicleId);
+    }
+
     // Delete A Guild
-    @DeleteMapping("{groupId}")
-    private ResponseEntity<String> deleteGroup(@PathVariable Long groupId) {
-        guildService.removeGuild(groupId);
+    @DeleteMapping("{guildId}")
+    private ResponseEntity<String> deleteGroup(@PathVariable Long guildId) {
+        guildService.removeGuild(guildId);
         return ResponseEntity.ok("Group delete successfully");
     }
+
     //Register Member To Guild
-    @PutMapping("{groupId}/members/register")
-    private ResponseEntity<Guild> addMember(@PathVariable Long groupId) {
-        Guild guild = guildService.showGuildById(groupId).get();
-        guildService.addMember(groupId);
+    @PutMapping("{guildId}/members/register")
+    private ResponseEntity<Guild> addMember(@PathVariable Long guildId) {
+        Guild guild = guildService.showGuildById(guildId).get();
+        guildService.addMember(guildId);
         return ResponseEntity.ok(guild);
     }
     // UnRegister Member To Guild
-    @PutMapping("{groupId}/members/unregister")
-    private ResponseEntity<Guild> removeMember(@PathVariable Long groupId) {
-        Guild guild = guildService.showGuildById(groupId).get();
-        guildService.removeMember(groupId);
+    @PutMapping("{guildId}/members/unregister")
+    private ResponseEntity<Guild> removeMember(@PathVariable Long guildId) {
+        Guild guild = guildService.showGuildById(guildId).get();
+        guildService.removeMember(guildId);
         return ResponseEntity.ok(guild);
     }
     // Register Vehicle To A Guild
-    @PutMapping("/{groupId}/vehicles/{vehicleId}/register")
-    private String addVehicle(@PathVariable Long groupId, @PathVariable Long vehicleId) {
-        return guildService.addVehicle(groupId,vehicleId);
+    @PutMapping("/{guildId}/vehicles/{vehicleId}/register")
+    private String addVehicle(@PathVariable Long guildId, @PathVariable Long vehicleId) {
+        return guildService.addVehicle(guildId,vehicleId);
     }
     // Unregister Vehicle From A Guild
-    @PutMapping("{groupId}/vehicles/{vehicleId}/unregister")
-    private String removeVehicle(@PathVariable Long groupId,@PathVariable Long vehicleId) {
-        return guildService.removeVehicle(groupId,vehicleId);
+    @PutMapping("{guildId}/vehicles/{vehicleId}/unregister")
+    private String removeVehicle(@PathVariable Long guildId,@PathVariable Long vehicleId) {
+        return guildService.removeVehicle(guildId,vehicleId);
     }
      //Group Memeber Use Vehicle
     @PutMapping("{guildId}/vehicles/{vehicleId}/route/{routeInfoId}")
     private ResponseEntity<Trip> userVehicle(@PathVariable Long guildId, @PathVariable Long vehicleId,@PathVariable Long routeInfoId){
         return ResponseEntity.ok(guildService.changeStateVehicle(guildId,vehicleId,routeInfoId));
+    }
+    // register Guild Walk
+    @PutMapping("{guildId}/guild-walks/register")
+    private ResponseEntity<Guild> addGuildWalk(@PathVariable Long guildId){
+        guildService.registerGuildWalk(guildId);
+        return ResponseEntity.ok(guildService.getGuildById(guildId).get());
     }
 
     // Register Guild Walk -- Under Development
@@ -78,10 +91,7 @@ public class GuildRestController {
     // Testing endpoints --------------------------------------------------------
 
     // Get All Guilds
-    @GetMapping
-    private ResponseEntity<List<Guild>> getGuilds() {
-        return ResponseEntity.ok(guildService.getGuilds());
-    }
+
     // Unregister Member From Guild
 
 }
