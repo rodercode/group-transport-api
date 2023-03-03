@@ -155,6 +155,8 @@ public class GuildService {
             guild.setGuildWalk(guildWalks + 1);
             guildRepo.save(guild);
 
+            
+
 
         }
     }

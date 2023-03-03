@@ -8,14 +8,14 @@ import lombok.Setter;
 @Setter
 public class GuildWalkInfo {
     private Long id;
+    private String name;
+    private int members;
+    private Long guildId;
 
-    public GuildWalkInfo(String name, int members, String guildId) {
+    public GuildWalkInfo(String name, int members, Long guildId) {
         this.name = name;
         this.members = members;
         this.guildId = guildId;
     }
 
-    private String name;
-    private int members;
-    private String guildId;
 }

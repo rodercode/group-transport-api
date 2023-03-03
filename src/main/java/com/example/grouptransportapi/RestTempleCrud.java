@@ -76,7 +76,7 @@ public class RestTempleCrud {
     }
 
     public void createGuildWalk(RestTemplate restTemplate, String name, int members, Long guildId) {
-        GuildWalkInfo newGuildWalk = new GuildWalkInfo(name,members,guildId);
+        GuildWalkInfo newGuildWalk = new GuildWalkInfo(name, members, guildId);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -88,3 +88,4 @@ public class RestTempleCrud {
                 entity,
                 String.class).getBody();
     }
+}
