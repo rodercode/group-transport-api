@@ -1,4 +1,4 @@
-package com.example.grouptransportapi.bean;
+package com.example.grouptransportapi.beaninfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
